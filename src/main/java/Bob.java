@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class Bob {
     public static void printSection(String s) {
-        System.out.println("=".repeat(80));
         System.out.println(s);
         System.out.println("=".repeat(80));
     }
