@@ -15,6 +15,13 @@ public class Bob {
         return s.nextLine();
     }
 
+    private static void printTasks() {
+        printSection(
+                IntStream.range(0, tasks.size())
+                        .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
+                        .reduce("", (acc, cur) -> acc + "\n\t" + cur));
+    }
+
     private static void addTasks(String task) {
         tasks.add(task);
     }
@@ -27,6 +34,10 @@ public class Bob {
             userInput = prompt(scanner);
             switch (userInput) {
                 case "bye": {
+                    break;
+                }
+                case "list": {
+                    printTasks();
                     break;
                 }
                 default: {
