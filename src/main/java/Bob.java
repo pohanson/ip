@@ -69,13 +69,38 @@ public class Bob {
                 break;
             case EXIT:
                 break;
+            case MARK: {
+                int index = Integer.parseInt(actionData.data) - 1;
+                if (validateTaskIndex(index)) {
+                    tasks.get(index).markDone();
+                    printSection("I've marked this task as done:\n\t" + tasks.get(index));
+                } else {
+                    printSection("Invalid task number: " + actionData.data);
+                }
+                break;
+            }
+            case UNMARK: {
+                int index = Integer.parseInt(actionData.data) - 1;
+                if (validateTaskIndex(index)) {
+                    tasks.get(index).unmarkDone();
+                    printSection("I've marked this task as not done yet:\n\t" + tasks.get(index));
+                } else {
+                    printSection("Invalid task number: " + actionData.data);
+                }
+                break;
+            }
             case ADD:
                 addTasks(actionData.data);
                 printSection("added: " + actionData.data);
                 break;
             default:
-                printSection("Unknown command: " + actionData.action);
+                break;
         }
+    }
+
+    private static boolean validateTaskIndex(int index) {
+        return (index >= 0 && index < tasks.size());
+
     }
 
     private static void printTasks() {
