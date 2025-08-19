@@ -5,14 +5,77 @@ import java.util.stream.IntStream;
 public class Bob {
     private static final ArrayList<Task> tasks = new ArrayList<>(100);
 
+    enum ActionType {
+        LIST,
+        EXIT,
+        MARK,
+        UNMARK,
+        ADD,
+        NULL,
+    }
+
+    private static class ActionData {
+        public final ActionType action;
+        public final String data;
+
+        public ActionData(ActionType action, String data) {
+            this.action = action;
+            this.data = data;
+        }
+    }
+
     private static void printSection(String s) {
         System.out.println(s);
         System.out.println("=".repeat(80));
     }
 
-    private static String prompt(Scanner s) {
+    private static ActionData prompt(Scanner s) {
         System.out.print("> ");
-        return s.nextLine();
+        String firstWord = s.next();
+        String restOfLine = s.nextLine().trim();
+
+        ActionType action;
+        switch (firstWord) {
+            case "list": {
+                action = ActionType.LIST;
+                break;
+            }
+            case "bye": {
+                action = ActionType.EXIT;
+                break;
+            }
+            case "mark": {
+                action = ActionType.MARK;
+                break;
+            }
+            case "unmark": {
+                action = ActionType.UNMARK;
+                break;
+            }
+            default: {
+                action = ActionType.ADD;
+                restOfLine = firstWord + " " + restOfLine;
+                break;
+            }
+        }
+
+        return new ActionData(action, restOfLine);
+    }
+
+    private static void executeAction(Bob.ActionData actionData) {
+        switch (actionData.action) {
+            case LIST:
+                printTasks();
+                break;
+            case EXIT:
+                break;
+            case ADD:
+                addTasks(actionData.data);
+                printSection("added: " + actionData.data);
+                break;
+            default:
+                printSection("Unknown command: " + actionData.action);
+        }
     }
 
     private static void printTasks() {
@@ -29,23 +92,11 @@ public class Bob {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         printSection("Hello! I'm Bob.\nHow can I help you?");
-        String userInput;
+        ActionData userInput = new ActionData(ActionType.NULL, "");
         do {
             userInput = prompt(scanner);
-            switch (userInput) {
-                case "bye": {
-                    break;
-                }
-                case "list": {
-                    printTasks();
-                    break;
-                }
-                default: {
-                    addTasks(userInput);
-                    printSection("added: " + userInput);
-                }
-            }
-        } while (!userInput.equals("bye"));
+            executeAction(userInput);
+        } while (userInput.action != ActionType.EXIT);
         printSection("Bye. Hope to see you again soon!");
     }
 }
