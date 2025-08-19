@@ -3,14 +3,14 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class Bob {
-    public static ArrayList<String> tasks = new ArrayList<>(100);
+    private static final ArrayList<String> tasks = new ArrayList<>(100);
 
-    public static void printSection(String s) {
+    private static void printSection(String s) {
         System.out.println(s);
         System.out.println("=".repeat(80));
     }
 
-    public static String prompt(Scanner s) {
+    private static String prompt(Scanner s) {
         System.out.print("> ");
         return s.nextLine();
     }
