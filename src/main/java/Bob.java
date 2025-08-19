@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class Bob {
-    private static final ArrayList<String> tasks = new ArrayList<>(100);
+    private static final ArrayList<Task> tasks = new ArrayList<>(100);
 
     private static void printSection(String s) {
         System.out.println(s);
@@ -23,7 +23,7 @@ public class Bob {
     }
 
     private static void addTasks(String task) {
-        tasks.add(task);
+        tasks.add(new Task(task));
     }
 
     public static void main(String[] args) {
