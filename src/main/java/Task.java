@@ -28,6 +28,9 @@ public class Task {
         if (input.startsWith("todo")) {
             return ToDos.parse(input);
         }
+        if (input.startsWith("deadline")) {
+            return Deadlines.parse(input);
+        }
         throw new InvalidInputException("Invalid task type: " + input + "\nValid types are: todo");
     }
 

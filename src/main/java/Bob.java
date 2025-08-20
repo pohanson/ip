@@ -53,7 +53,8 @@ public class Bob {
                 action = ActionType.UNMARK;
                 break;
             }
-            case "todo": {
+            case "todo":
+            case "deadline": {
                 action = ActionType.ADD;
                 restOfLine = firstWord + " " + restOfLine;
                 break;
