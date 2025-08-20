@@ -54,7 +54,8 @@ public class Bob {
                 break;
             }
             case "todo":
-            case "deadline": {
+            case "deadline":
+            case "event": {
                 action = ActionType.ADD;
                 restOfLine = firstWord + " " + restOfLine;
                 break;
