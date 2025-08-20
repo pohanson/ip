@@ -1,7 +1,54 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
-
+Hello! I'm Bob.
+How can I help you?
+================================================================================
+> No tasks in list.
+================================================================================
+> I've added this task:
+	 [T][ ] borrow money
+Now you've 1 tasks in the list.
+================================================================================
+> I've added this task:
+	 [E][ ] lecture (from: Thursday 2pm to: 4pm)
+Now you've 2 tasks in the list.
+================================================================================
+> I've added this task:
+	 [D][ ] return book (by: Sunday)
+Now you've 3 tasks in the list.
+================================================================================
+> 
+	1. [T][ ] borrow money
+	2. [E][ ] lecture (from: Thursday 2pm to: 4pm)
+	3. [D][ ] return book (by: Sunday)
+================================================================================
+> Invalid task number: 8
+================================================================================
+> I've marked this task as done:
+	[E][X] lecture (from: Thursday 2pm to: 4pm)
+================================================================================
+> 
+	1. [T][ ] borrow money
+	2. [E][X] lecture (from: Thursday 2pm to: 4pm)
+	3. [D][ ] return book (by: Sunday)
+================================================================================
+> I've marked this task as done:
+	[T][X] borrow money
+================================================================================
+> I've marked this task as not done yet:
+	[E][ ] lecture (from: Thursday 2pm to: 4pm)
+================================================================================
+> 
+	1. [T][X] borrow money
+	2. [E][ ] lecture (from: Thursday 2pm to: 4pm)
+	3. [D][ ] return book (by: Sunday)
+================================================================================
+> Invalid event input: event lec /from /to 1am
+Example of valid format: event project meeting /from Mon 2pm /to 4pm
+================================================================================
+> Invalid deadline input: deadline /by sun
+Example of valid format: deadline return book /by Sunday
+================================================================================
+> Invalid todo task: todo 
+Example of valid format: 'todo borrow book'
+================================================================================
+> Bye. Hope to see you again soon!
+================================================================================
