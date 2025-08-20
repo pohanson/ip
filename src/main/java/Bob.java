@@ -11,6 +11,7 @@ public class Bob {
         MARK,
         UNMARK,
         ADD,
+        DELETE,
         NULL,
         INVALID
     }
@@ -40,6 +41,7 @@ public class Bob {
                             todo <description> - Add a task without any date/time attached to it e.g., visit new theme park
                             deadline <description> /by <date> - Add a task that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
                             event <description> /from <start> /to <end> - Add task that start at a specific date/time and ends at a specific date/time
+                            delete <task number> - Delete a task from the list
                             bye - Exit the program
                             """);
     }
@@ -72,6 +74,10 @@ public class Bob {
             case "event": {
                 action = ActionType.ADD;
                 restOfLine = firstWord + " " + restOfLine;
+                break;
+            }
+            case "delete": {
+                action = ActionType.DELETE;
                 break;
             }
             default: {
@@ -120,6 +126,18 @@ public class Bob {
                     printSection(e.getMessage());
                 }
                 break;
+            case DELETE: {
+                int index = Integer.parseInt(actionData.data) - 1;
+                if (validateTaskIndex(index)) {
+                    Task removedTask = tasks.remove(index);
+                    printSection(String.format("I've removed this task:\n\t%s\nNow you've %d tasks in the list.",
+                            removedTask,
+                            tasks.size()));
+                } else {
+                    printSection("Invalid task number: " + actionData.data);
+                }
+                break;
+            }
             case INVALID:
                 printSection("Invalid command: " + actionData.data);
                 printHelp();
