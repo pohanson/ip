@@ -13,4 +13,6 @@ event lec /from /to 1am
 deadline /by sun
 todo
 blahblahblah
+delete 2
+list
 bye
