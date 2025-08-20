@@ -120,6 +120,10 @@ public class Bob {
     }
 
     private static void printTasks() {
+        if (tasks.isEmpty()) {
+            printSection("No tasks in list.");
+            return;
+        }
         printSection(
                 IntStream.range(0, tasks.size())
                         .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
