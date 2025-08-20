@@ -12,6 +12,7 @@ public class Bob {
         UNMARK,
         ADD,
         NULL,
+        INVALID
     }
 
     private static class ActionData {
@@ -52,10 +53,14 @@ public class Bob {
                 action = ActionType.UNMARK;
                 break;
             }
-            default: {
+            case "todo": {
                 action = ActionType.ADD;
                 restOfLine = firstWord + " " + restOfLine;
                 break;
+            }
+            default: {
+                action = ActionType.INVALID;
+                restOfLine = firstWord + " " + restOfLine;
             }
         }
 
@@ -90,8 +95,17 @@ public class Bob {
                 break;
             }
             case ADD:
-                addTasks(actionData.data);
-                printSection("added: " + actionData.data);
+                try {
+                    Task task = Task.createFromString(actionData.data);
+                    addTasks(task);
+                    printSection(String.format("I've added this task:\n\t %s\nNow you've %d tasks in the list.", task,
+                            tasks.size()));
+                } catch (InvalidInputException e) {
+                    printSection(e.getMessage());
+                }
+                break;
+            case INVALID:
+                printSection("Invalid command: " + actionData.data);
                 break;
             default:
                 break;
@@ -110,8 +124,8 @@ public class Bob {
                         .reduce("", (acc, cur) -> acc + "\n\t" + cur));
     }
 
-    private static void addTasks(String task) {
-        tasks.add(new Task(task));
+    private static void addTasks(Task task) {
+        tasks.add(task);
     }
 
     public static void main(String[] args) {

@@ -23,4 +23,12 @@ public class Task {
     public void unmarkDone() {
         this.isDone = false;
     }
+
+    public static Task createFromString(String input) throws InvalidInputException {
+        if (input.startsWith("todo")) {
+            return ToDos.parse(input);
+        }
+        throw new InvalidInputException("Invalid task type: " + input + "\nValid types are: todo");
+    }
+
 }
