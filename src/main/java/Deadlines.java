@@ -13,7 +13,7 @@ public class Deadlines extends Task {
 
     public static Deadlines parse(String input) throws InvalidInputException {
         String[] params = input.replaceFirst("deadline", "").split("/by");
-        if (params.length != 2) {
+        if (params.length != 2 || params[0].trim().isEmpty() || params[1].trim().isEmpty()) {
             throw new InvalidInputException(
                     "Invalid deadline input: " + input + "\nExample of valid format: deadline return book /by Sunday");
         }

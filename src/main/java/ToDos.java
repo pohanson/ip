@@ -9,11 +9,11 @@ public class ToDos extends Task {
     }
 
     public static ToDos parse(String input) throws InvalidInputException {
-        String[] splittedInput = input.split(" ", 2);
-        if (splittedInput.length != 2) {
+        String taskName = input.replaceFirst("todo", "").trim();
+        if (taskName.isEmpty()) {
             throw new InvalidInputException(
                     "Invalid todo task: " + input + "\nExample of valid format: 'todo borrow book'");
         }
-        return new ToDos(splittedInput[1].trim());
+        return new ToDos(taskName);
     }
 }
