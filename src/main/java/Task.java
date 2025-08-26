@@ -16,12 +16,14 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
-    public void markDone() {
+    public Task markDone() {
         this.isDone = true;
+        return this;
     }
 
-    public void unmarkDone() {
+    public Task unmarkDone() {
         this.isDone = false;
+        return this;
     }
 
     public static Task createFromString(String input) throws InvalidInputException {

@@ -1,9 +1,7 @@
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class Bob {
-    private static final ArrayList<Task> tasks = new ArrayList<>(100);
+    private static final TaskList tasks = new TaskList();
 
     enum ActionType {
         LIST,
@@ -92,13 +90,13 @@ public class Bob {
     private static void executeAction(Bob.ActionData actionData) {
         switch (actionData.action) {
             case LIST:
-                printTasks();
+                printSection(tasks.stringifyTasks());
                 break;
             case EXIT:
                 break;
             case MARK: {
                 int index = Integer.parseInt(actionData.data) - 1;
-                if (validateTaskIndex(index)) {
+                if (tasks.validateTaskIndex(index)) {
                     tasks.get(index).markDone();
                     printSection("I've marked this task as done:\n\t" + tasks.get(index));
                 } else {
@@ -108,9 +106,9 @@ public class Bob {
             }
             case UNMARK: {
                 int index = Integer.parseInt(actionData.data) - 1;
-                if (validateTaskIndex(index)) {
-                    tasks.get(index).unmarkDone();
-                    printSection("I've marked this task as not done yet:\n\t" + tasks.get(index));
+                if (tasks.validateTaskIndex(index)) {
+                    Task task = tasks.unmarkDone(index);
+                    printSection("I've marked this task as not done yet:\n\t" + task);
                 } else {
                     printSection("Invalid task number: " + actionData.data);
                 }
@@ -119,7 +117,7 @@ public class Bob {
             case ADD:
                 try {
                     Task task = Task.createFromString(actionData.data);
-                    addTasks(task);
+                    tasks.add(task);
                     printSection(String.format("I've added this task:\n\t %s\nNow you've %d tasks in the list.", task,
                             tasks.size()));
                 } catch (InvalidInputException e) {
@@ -128,7 +126,7 @@ public class Bob {
                 break;
             case DELETE: {
                 int index = Integer.parseInt(actionData.data) - 1;
-                if (validateTaskIndex(index)) {
+                if (tasks.validateTaskIndex(index)) {
                     Task removedTask = tasks.remove(index);
                     printSection(String.format("I've removed this task:\n\t%s\nNow you've %d tasks in the list.",
                             removedTask,
@@ -145,26 +143,6 @@ public class Bob {
             default:
                 break;
         }
-    }
-
-    private static boolean validateTaskIndex(int index) {
-        return (index >= 0 && index < tasks.size());
-
-    }
-
-    private static void printTasks() {
-        if (tasks.isEmpty()) {
-            printSection("No tasks in list.");
-            return;
-        }
-        printSection(
-                IntStream.range(0, tasks.size())
-                        .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
-                        .reduce("", (acc, cur) -> acc + "\n\t" + cur));
-    }
-
-    private static void addTasks(Task task) {
-        tasks.add(task);
     }
 
     public static void main(String[] args) {
