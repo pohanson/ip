@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -6,6 +6,8 @@ public class Task {
         this.description = description;
         this.isDone = false;
     }
+
+    abstract String toInputString();
 
     @Override
     public String toString() {

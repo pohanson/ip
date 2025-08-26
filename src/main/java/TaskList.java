@@ -50,4 +50,13 @@ public class TaskList {
                     .reduce("", (acc, cur) -> acc + "\n\t" + cur);
     }
 
+    public String toStorageString() {
+        if (tasks.isEmpty()) {
+            return "";
+        } else {
+            return tasks.stream()
+                    .map(task -> task.toInputString())
+                    .reduce("", (acc, x) -> acc + x);
+        }
+    }
 }

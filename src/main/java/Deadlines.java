@@ -20,4 +20,8 @@ public class Deadlines extends Task {
         return new Deadlines(params[0].trim(), params[1].trim());
 
     }
+
+    public String toInputString() {
+        return "deadline " + this.description + " /by " + this.deadline;
+    }
 }
