@@ -40,5 +40,4 @@ public abstract class Task {
         }
         throw new InvalidInputException("Invalid task type: " + input + "\nValid types are: todo");
     }
-
 }

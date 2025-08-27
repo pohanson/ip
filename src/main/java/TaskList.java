@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class TaskList {
@@ -41,6 +42,11 @@ public class TaskList {
 
     }
 
+    @Override
+    public String toString() {
+        return stringifyTasks();
+    }
+
     public String stringifyTasks() {
         if (tasks.isEmpty()) {
             return "No tasks in list.";
@@ -55,8 +61,25 @@ public class TaskList {
             return "";
         } else {
             return tasks.stream()
-                    .map(task -> task.toInputString())
-                    .reduce("", (acc, x) -> acc + x);
+                    .map(task -> (task.isDone ? "1" : "0") + " " + task.toInputString())
+                    .reduce("", (acc, x) -> acc + x + "\n");
         }
+    }
+
+    public static TaskList fromStorage(Scanner s) throws InvalidInputException {
+        TaskList tasks = new TaskList();
+        while (s.hasNextLine()) {
+            String[] line = s.nextLine().split(" ", 2);
+            if (line.length != 2) {
+                System.out.println("Invalid task format in storage: " + line);
+                continue;
+            }
+            Task task = Task.createFromString(line[1]);
+            if (line[0].equals("1")) {
+                task.markDone();
+            }
+            tasks.add(task);
+        }
+        return tasks;
     }
 }
