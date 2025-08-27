@@ -3,16 +3,18 @@ import java.util.Scanner;
 
 public class Bob {
     private TaskList tasks;
+    private Storage storage;
 
     public Bob(String filePath) {
+        this.storage = new Storage(filePath);
         try {
-            tasks = Storage.loadTaskList();
+            tasks = this.storage.loadTaskList();
         } catch (IOException e) {
             System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
-            tasks = new TaskList();
+            tasks = new TaskList(this.storage);
         } catch (InvalidInputException e) {
             System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
-            tasks = new TaskList();
+            tasks = new TaskList(this.storage);
         }
 
     }

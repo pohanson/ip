@@ -1,32 +1,33 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Storage {
-    private static final String FILENAME = "data/tasklist.txt";
+    private String filePath;
 
-    public Storage() {
+    public Storage(String filePath) {
+        this.filePath = filePath;
+        Path path = Paths.get(filePath);
+        if (!path.toFile().exists()) {
+            try {
+                Files.createDirectories(path.getParent());
+                Files.createFile(path);
+            } catch (IOException e) {
+                System.out.println("Error creating file: " + e.getMessage());
+            }
+        }
     }
 
-    private static File getFile() throws IOException {
-        File file = Paths.get(FILENAME).toFile();
-        if (!file.isFile()) {
-            System.out.println("Creating new file at " + file.getAbsolutePath());
-            file.createNewFile();
-        }
-        return file;
+    private File getFile() throws IOException {
+        return Paths.get(this.filePath).toFile();
     }
 
-    public static void saveTaskList(TaskList tasks) throws IOException {
-        try {
-            Files.createDirectory(Paths.get("data"));
-        } catch (FileAlreadyExistsException e) {
-        }
-        File file = getFile();
+    public void saveTaskList(TaskList tasks) throws IOException {
+        File file = this.getFile();
         FileWriter fw = new FileWriter(file);
         try {
             fw.write(tasks.toStorageString());
@@ -35,11 +36,23 @@ public class Storage {
         }
     }
 
-    public static TaskList loadTaskList() throws IOException, InvalidInputException {
-        File file = getFile();
+    public TaskList loadTaskList() throws IOException, InvalidInputException {
+        File file = this.getFile();
         Scanner s = new Scanner(file);
         try {
-            TaskList tasks = TaskList.fromStorage(s);
+            TaskList tasks = new TaskList(this);
+            while (s.hasNextLine()) {
+                String[] line = s.nextLine().split(" ", 2);
+                if (line.length != 2) {
+                    System.out.println("Invalid task format in storage: " + line);
+                    continue;
+                }
+                Task task = Task.createFromString(line[1]);
+                if (line[0].equals("1")) {
+                    task.markDone();
+                }
+                tasks.add(task);
+            }
             return tasks;
         } finally {
             s.close();
