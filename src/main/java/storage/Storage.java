@@ -1,3 +1,5 @@
+package storage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -5,6 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+
+import exception.InvalidInputException;
+import task.Task;
+import task.TaskList;
 
 public class Storage {
     private String filePath;
@@ -47,6 +53,7 @@ public class Storage {
                     System.out.println("Invalid task format in storage: " + line);
                     continue;
                 }
+                
                 Task task = Task.createFromString(line[1]);
                 if (line[0].equals("1")) {
                     task.markDone();
@@ -54,6 +61,7 @@ public class Storage {
                 tasks.add(task);
             }
             return tasks;
+
         } finally {
             s.close();
         }
