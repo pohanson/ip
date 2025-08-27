@@ -37,11 +37,13 @@ public class Bob {
                             list - List all tasks
                             mark <task number> - Mark a task as done
                             unmark <task number> - Unmark a task as not done
-                            todo <description> - Add a task without any date/time attached to it e.g., visit new theme park
-                            deadline <description> /by <date> - Add a task that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
-                            event <description> /from <start> /to <end> - Add task that start at a specific date/time and ends at a specific date/time
+                            todo <description> - Add a task without any date/time attached to it
+                            deadline <description> /by <datetime> - Add a task that need to be done before a specific date/time
+                            event <description> /from <start datetime> /to <end datetime> - Add task that start at a specific date/time and ends at a specific date/time
                             delete <task number> - Delete a task from the list
                             bye - Exit the program
+                        Note:
+                            All datetime should be in the format of "dd/MM/yyyy HHmm", for example: 27/08/2025 1000
                             """);
     }
 

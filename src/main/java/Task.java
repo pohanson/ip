@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -39,5 +42,32 @@ public abstract class Task {
             return Events.parse(input);
         }
         throw new InvalidInputException("Invalid task type: " + input + "\nValid types are: todo");
+    }
+
+    /**
+     * Parses an input string in the format of "dd/MM/yyyy HHmm", for example,
+     * "27/08/2025 1000"
+     * 
+     * @param input the date string to parse
+     */
+    public static LocalDateTime parseDateTimeString(String input) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        return LocalDateTime.parse(input, dateFormat);
+    }
+
+    /**
+     * Formats a LocalDateTime object into a string. eg. "27 Aug 2025 10:00"
+     */
+    public static String formatDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
+        return dateTime.format(dateFormat);
+    }
+
+    /**
+     * Formats a LocalDateTime object into the input string. eg. "27/08/2025 1000"
+     */
+    public static String toInputStringDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        return dateTime.format(dateFormat);
     }
 }
