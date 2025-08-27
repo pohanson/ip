@@ -1,7 +1,8 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Bob {
-    private static final TaskList tasks = new TaskList();
+    private static TaskList tasks;
 
     enum ActionType {
         LIST,
@@ -97,7 +98,7 @@ public class Bob {
             case MARK: {
                 int index = Integer.parseInt(actionData.data) - 1;
                 if (tasks.validateTaskIndex(index)) {
-                    tasks.get(index).markDone();
+                    tasks.markDone(index);
                     printSection("I've marked this task as done:\n\t" + tasks.get(index));
                 } else {
                     printSection("Invalid task number: " + actionData.data);
@@ -146,6 +147,16 @@ public class Bob {
     }
 
     public static void main(String[] args) {
+        try {
+            tasks = Storage.loadTaskList();
+        } catch (IOException e) {
+            System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
+            tasks = new TaskList();
+        } catch (InvalidInputException e) {
+            System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
+            tasks = new TaskList();
+        }
+
         Scanner scanner = new Scanner(System.in);
         printSection("Hello! I'm Bob.\nHow can I help you?");
         ActionData userInput = new ActionData(ActionType.NULL, "");

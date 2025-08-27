@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.IntStream;
@@ -18,7 +19,11 @@ public class TaskList {
     }
 
     public boolean add(Task t) {
-        return tasks.add(t);
+        boolean result = tasks.add(t);
+        if (result) {
+            this.saveToStorage();
+        }
+        return result;
     }
 
     public Task get(int index) {
@@ -26,15 +31,21 @@ public class TaskList {
     }
 
     public Task markDone(int index) {
-        return tasks.get(index).markDone();
+        Task t = tasks.get(index).markDone();
+        this.saveToStorage();
+        return t;
     }
 
     public Task unmarkDone(int index) {
-        return tasks.get(index).unmarkDone();
+        Task t = tasks.get(index).unmarkDone();
+        this.saveToStorage();
+        return t;
     }
 
     public Task remove(int index) {
-        return tasks.remove(index);
+        Task t = tasks.remove(index);
+        this.saveToStorage();
+        return t;
     }
 
     public boolean validateTaskIndex(int index) {
@@ -81,5 +92,13 @@ public class TaskList {
             tasks.add(task);
         }
         return tasks;
+    }
+
+    public void saveToStorage() {
+        try {
+            Storage.saveTaskList(this);
+        } catch (IOException e) {
+            System.out.println("Error saving tasks to file: " + e.getMessage());
+        }
     }
 }
