@@ -54,4 +54,12 @@ public abstract class Task {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
         return LocalDateTime.parse(input, dateFormat);
     }
+
+    /**
+     * Formats a LocalDateTime object into a string. eg. "27 Aug 2025 10:00"
+     */
+    public static String formatDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
+        return dateTime.format(dateFormat);
+    }
 }
