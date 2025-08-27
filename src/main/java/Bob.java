@@ -2,7 +2,20 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Bob {
-    private static TaskList tasks;
+    private TaskList tasks;
+
+    public Bob(String filePath) {
+        try {
+            tasks = Storage.loadTaskList();
+        } catch (IOException e) {
+            System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
+            tasks = new TaskList();
+        } catch (InvalidInputException e) {
+            System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
+            tasks = new TaskList();
+        }
+
+    }
 
     enum ActionType {
         LIST,
@@ -90,7 +103,7 @@ public class Bob {
         return new ActionData(action, restOfLine);
     }
 
-    private static void executeAction(Bob.ActionData actionData) {
+    private void executeAction(Bob.ActionData actionData) {
         switch (actionData.action) {
             case LIST:
                 printSection(tasks.stringifyTasks());
@@ -148,17 +161,7 @@ public class Bob {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            tasks = Storage.loadTaskList();
-        } catch (IOException e) {
-            System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
-            tasks = new TaskList();
-        } catch (InvalidInputException e) {
-            System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
-            tasks = new TaskList();
-        }
-
+    public void run() {
         Scanner scanner = new Scanner(System.in);
         printSection("Hello! I'm Bob.\nHow can I help you?");
         ActionData userInput = new ActionData(ActionType.NULL, "");
@@ -167,5 +170,9 @@ public class Bob {
             executeAction(userInput);
         } while (userInput.action != ActionType.EXIT);
         printSection("Bye. Hope to see you again soon!");
+    }
+
+    public static void main(String[] args) {
+        new Bob("data/tasklist.txt").run();
     }
 }
