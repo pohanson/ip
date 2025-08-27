@@ -4,16 +4,18 @@ import java.util.Scanner;
 public class Bob {
     private TaskList tasks;
     private Storage storage;
+    private Ui ui;
 
     public Bob(String filePath) {
         this.storage = new Storage(filePath);
+        this.ui = new Ui();
         try {
             tasks = this.storage.loadTaskList();
         } catch (IOException e) {
-            System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
+            ui.showError("Error loading tasks from file, using empty task list: " + e.getMessage());
             tasks = new TaskList(this.storage);
         } catch (InvalidInputException e) {
-            System.out.println("Error loading tasks from file, using empty task list: " + e.getMessage());
+            ui.showError("Error loading tasks from file, using empty task list: " + e.getMessage());
             tasks = new TaskList(this.storage);
         }
 
@@ -38,28 +40,6 @@ public class Bob {
             this.action = action;
             this.data = data;
         }
-    }
-
-    private static void printSection(String s) {
-        System.out.println(s);
-        System.out.println("=".repeat(80));
-    }
-
-    private static void printHelp() {
-        System.out.println(
-                """
-                        Available commands:
-                            list - List all tasks
-                            mark <task number> - Mark a task as done
-                            unmark <task number> - Unmark a task as not done
-                            todo <description> - Add a task without any date/time attached to it
-                            deadline <description> /by <datetime> - Add a task that need to be done before a specific date/time
-                            event <description> /from <start datetime> /to <end datetime> - Add task that start at a specific date/time and ends at a specific date/time
-                            delete <task number> - Delete a task from the list
-                            bye - Exit the program
-                        Note:
-                            All datetime should be in the format of "dd/MM/yyyy HHmm", for example: 27/08/2025 1000
-                            """);
     }
 
     private static ActionData prompt(Scanner s) {
@@ -108,7 +88,7 @@ public class Bob {
     private void executeAction(Bob.ActionData actionData) {
         switch (actionData.action) {
             case LIST:
-                printSection(tasks.stringifyTasks());
+                ui.printSection(tasks.stringifyTasks());
                 break;
             case EXIT:
                 break;
@@ -116,9 +96,9 @@ public class Bob {
                 int index = Integer.parseInt(actionData.data) - 1;
                 if (tasks.validateTaskIndex(index)) {
                     tasks.markDone(index);
-                    printSection("I've marked this task as done:\n\t" + tasks.get(index));
+                    ui.printSection("I've marked this task as done:\n\t" + tasks.get(index));
                 } else {
-                    printSection("Invalid task number: " + actionData.data);
+                    ui.printSection("Invalid task number: " + actionData.data);
                 }
                 break;
             }
@@ -126,9 +106,9 @@ public class Bob {
                 int index = Integer.parseInt(actionData.data) - 1;
                 if (tasks.validateTaskIndex(index)) {
                     Task task = tasks.unmarkDone(index);
-                    printSection("I've marked this task as not done yet:\n\t" + task);
+                    ui.printSection("I've marked this task as not done yet:\n\t" + task);
                 } else {
-                    printSection("Invalid task number: " + actionData.data);
+                    ui.printSection("Invalid task number: " + actionData.data);
                 }
                 break;
             }
@@ -136,27 +116,28 @@ public class Bob {
                 try {
                     Task task = Task.createFromString(actionData.data);
                     tasks.add(task);
-                    printSection(String.format("I've added this task:\n\t %s\nNow you've %d tasks in the list.", task,
-                            tasks.size()));
+                    ui.printSection(
+                            String.format("I've added this task:\n\t %s\nNow you've %d tasks in the list.", task,
+                                    tasks.size()));
                 } catch (InvalidInputException e) {
-                    printSection(e.getMessage());
+                    ui.printSection(e.getMessage());
                 }
                 break;
             case DELETE: {
                 int index = Integer.parseInt(actionData.data) - 1;
                 if (tasks.validateTaskIndex(index)) {
                     Task removedTask = tasks.remove(index);
-                    printSection(String.format("I've removed this task:\n\t%s\nNow you've %d tasks in the list.",
+                    ui.printSection(String.format("I've removed this task:\n\t%s\nNow you've %d tasks in the list.",
                             removedTask,
                             tasks.size()));
                 } else {
-                    printSection("Invalid task number: " + actionData.data);
+                    ui.printSection("Invalid task number: " + actionData.data);
                 }
                 break;
             }
             case INVALID:
-                printSection("Invalid command: " + actionData.data);
-                printHelp();
+                ui.printSection("Invalid command: " + actionData.data);
+                ui.printHelp();
                 break;
             default:
                 break;
@@ -165,13 +146,13 @@ public class Bob {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        printSection("Hello! I'm Bob.\nHow can I help you?");
+        ui.printSection("Hello! I'm Bob.\nHow can I help you?");
         ActionData userInput = new ActionData(ActionType.NULL, "");
         do {
             userInput = prompt(scanner);
             executeAction(userInput);
         } while (userInput.action != ActionType.EXIT);
-        printSection("Bye. Hope to see you again soon!");
+        ui.printSection("Bye. Hope to see you again soon!");
     }
 
     public static void main(String[] args) {
