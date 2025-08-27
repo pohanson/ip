@@ -62,4 +62,12 @@ public abstract class Task {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
         return dateTime.format(dateFormat);
     }
+
+    /**
+     * Formats a LocalDateTime object into the input string. eg. "27/08/2025 1000"
+     */
+    public static String toInputStringDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        return dateTime.format(dateFormat);
+    }
 }

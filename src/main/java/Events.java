@@ -1,8 +1,11 @@
-public class Events extends Task {
-    private String start;
-    private String end;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
-    public Events(String description, String start, String end) {
+public class Events extends Task {
+    private LocalDateTime start;
+    private LocalDateTime end;
+
+    public Events(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
         this.start = start;
         this.end = end;
@@ -10,7 +13,8 @@ public class Events extends Task {
 
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), start, end);
+        return String.format("[E]%s (%s - %s)", super.toString(), super.formatDateTime(start),
+                super.formatDateTime(end));
     }
 
     public static Events parse(String input) throws InvalidInputException {
@@ -19,12 +23,22 @@ public class Events extends Task {
                 || params[2].trim().isEmpty()) {
             throw new InvalidInputException(
                     "Invalid event input: " + input
-                            + "\nExample of valid format: event project meeting /from Mon 2pm /to 4pm");
+                            + "\nExample of valid format: event project meeting /from 01/01/2025 1200 /to 01/01/2025 1400");
         }
-        return new Events(params[0].trim(), params[1].trim(), params[2].trim());
+
+        try {
+            LocalDateTime start = Task.parseDateTimeString(params[1].trim());
+            LocalDateTime end = Task.parseDateTimeString(params[2].trim());
+            return new Events(params[0].trim(), start, end);
+        } catch (DateTimeParseException e) {
+            throw new InvalidInputException(
+                    "Invalid date format in event input: " + input
+                            + "\nExample of valid format: event project meeting /from 01/01/2025 1200 /to 01/01/2025 1400");
+        }
     }
 
     public String toInputString() {
-        return "event " + this.description + " /from " + this.start + " /to " + this.end;
+        return "event " + this.description + " /from " + super.toInputStringDateTime(this.start) + " /to "
+                + super.toInputStringDateTime(this.end);
     }
 }
