@@ -16,4 +16,8 @@ public class ToDos extends Task {
         }
         return new ToDos(taskName);
     }
+
+    public String toInputString() {
+        return "todo " + this.description;
+    }
 }

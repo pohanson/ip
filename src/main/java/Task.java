@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -6,6 +6,8 @@ public class Task {
         this.description = description;
         this.isDone = false;
     }
+
+    abstract String toInputString();
 
     @Override
     public String toString() {
@@ -16,12 +18,14 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
-    public void markDone() {
+    public Task markDone() {
         this.isDone = true;
+        return this;
     }
 
-    public void unmarkDone() {
+    public Task unmarkDone() {
         this.isDone = false;
+        return this;
     }
 
     public static Task createFromString(String input) throws InvalidInputException {
@@ -36,5 +40,4 @@ public class Task {
         }
         throw new InvalidInputException("Invalid task type: " + input + "\nValid types are: todo");
     }
-
 }

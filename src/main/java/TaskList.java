@@ -1,0 +1,85 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.stream.IntStream;
+
+public class TaskList {
+    private final ArrayList<Task> tasks = new ArrayList<>(100);
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public int size() {
+        return tasks.size();
+    }
+
+    public boolean isEmpty() {
+        return tasks.isEmpty();
+    }
+
+    public boolean add(Task t) {
+        return tasks.add(t);
+    }
+
+    public Task get(int index) {
+        return tasks.get(index);
+    }
+
+    public Task markDone(int index) {
+        return tasks.get(index).markDone();
+    }
+
+    public Task unmarkDone(int index) {
+        return tasks.get(index).unmarkDone();
+    }
+
+    public Task remove(int index) {
+        return tasks.remove(index);
+    }
+
+    public boolean validateTaskIndex(int index) {
+        return (index >= 0 && index < tasks.size());
+
+    }
+
+    @Override
+    public String toString() {
+        return stringifyTasks();
+    }
+
+    public String stringifyTasks() {
+        if (tasks.isEmpty()) {
+            return "No tasks in list.";
+        } else
+            return IntStream.range(0, tasks.size())
+                    .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
+                    .reduce("", (acc, cur) -> acc + "\n\t" + cur);
+    }
+
+    public String toStorageString() {
+        if (tasks.isEmpty()) {
+            return "";
+        } else {
+            return tasks.stream()
+                    .map(task -> (task.isDone ? "1" : "0") + " " + task.toInputString())
+                    .reduce("", (acc, x) -> acc + x + "\n");
+        }
+    }
+
+    public static TaskList fromStorage(Scanner s) throws InvalidInputException {
+        TaskList tasks = new TaskList();
+        while (s.hasNextLine()) {
+            String[] line = s.nextLine().split(" ", 2);
+            if (line.length != 2) {
+                System.out.println("Invalid task format in storage: " + line);
+                continue;
+            }
+            Task task = Task.createFromString(line[1]);
+            if (line[0].equals("1")) {
+                task.markDone();
+            }
+            tasks.add(task);
+        }
+        return tasks;
+    }
+}

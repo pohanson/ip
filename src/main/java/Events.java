@@ -24,4 +24,7 @@ public class Events extends Task {
         return new Events(params[0].trim(), params[1].trim(), params[2].trim());
     }
 
+    public String toInputString() {
+        return "event " + this.description + " /from " + this.start + " /to " + this.end;
+    }
 }
