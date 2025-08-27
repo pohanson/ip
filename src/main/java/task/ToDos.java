@@ -1,3 +1,7 @@
+package task;
+
+import exception.InvalidInputException;
+
 public class ToDos extends Task {
     public ToDos(String description) {
         super(description);
@@ -12,7 +16,8 @@ public class ToDos extends Task {
         String taskName = input.replaceFirst("todo", "").trim();
         if (taskName.isEmpty()) {
             throw new InvalidInputException(
-                    "Invalid todo task (description cannot be empty): " + input + "\nExample of valid format: 'todo borrow book'");
+                    "Invalid todo task (description cannot be empty): " + input
+                            + "\nExample of valid format: 'todo borrow book'");
         }
         return new ToDos(taskName);
     }

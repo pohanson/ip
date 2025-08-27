@@ -1,10 +1,18 @@
+package task;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.stream.IntStream;
+
+import storage.Storage;
 
 public class TaskList {
     private final ArrayList<Task> tasks = new ArrayList<>(100);
+    private Storage storage;
+
+    public TaskList(Storage storage) {
+        this.storage = storage;
+    }
 
     public ArrayList<Task> getTasks() {
         return tasks;
@@ -77,26 +85,9 @@ public class TaskList {
         }
     }
 
-    public static TaskList fromStorage(Scanner s) throws InvalidInputException {
-        TaskList tasks = new TaskList();
-        while (s.hasNextLine()) {
-            String[] line = s.nextLine().split(" ", 2);
-            if (line.length != 2) {
-                System.out.println("Invalid task format in storage: " + line);
-                continue;
-            }
-            Task task = Task.createFromString(line[1]);
-            if (line[0].equals("1")) {
-                task.markDone();
-            }
-            tasks.add(task);
-        }
-        return tasks;
-    }
-
     public void saveToStorage() {
         try {
-            Storage.saveTaskList(this);
+            storage.saveTaskList(this);
         } catch (IOException e) {
             System.out.println("Error saving tasks to file: " + e.getMessage());
         }
