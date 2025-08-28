@@ -1,10 +1,10 @@
-package task;
+package bob.task;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-import storage.Storage;
+import bob.storage.Storage;
 
 public class TaskList {
     private final ArrayList<Task> tasks = new ArrayList<>(100);

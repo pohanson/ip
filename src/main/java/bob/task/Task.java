@@ -1,10 +1,9 @@
-package task;
-
+package bob.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import exception.InvalidInputException;
+import bob.exception.InvalidInputException;
 
 public abstract class Task {
     protected String description;

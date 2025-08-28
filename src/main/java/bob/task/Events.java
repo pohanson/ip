@@ -1,10 +1,9 @@
-package task;
-
+package bob.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-import exception.InvalidInputException;
+import bob.exception.InvalidInputException;
 
 public class Events extends Task {
     private LocalDateTime start;
