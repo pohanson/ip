@@ -6,13 +6,24 @@ import bob.task.Task;
 import bob.task.TaskList;
 import bob.ui.Ui;
 
+/**
+ * Command to add a task.
+ */
 public class AddCommand extends Command {
     private String input;
 
+    /**
+     * Constructs AddCommand.
+     * 
+     * @param input the user input
+     */
     public AddCommand(String input) {
         this.input = input;
     }
 
+    /**
+     * Parses the input and adds the task to tasks.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
