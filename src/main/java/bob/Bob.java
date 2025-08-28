@@ -1,11 +1,13 @@
+package bob;
+
 import java.io.IOException;
 import java.util.Scanner;
 
-import exception.InvalidInputException;
-import storage.Storage;
-import task.Task;
-import task.TaskList;
-import ui.Ui;
+import bob.exception.InvalidInputException;
+import bob.storage.Storage;
+import bob.task.Task;
+import bob.task.TaskList;
+import bob.ui.Ui;
 
 public class Bob {
     private TaskList tasks;
