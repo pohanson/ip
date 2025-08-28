@@ -26,6 +26,7 @@ public class Ui {
                             deadline <description> /by <datetime> - Add a task that need to be done before a specific date/time
                             event <description> /from <start datetime> /to <end datetime> - Add task that start at a specific date/time and ends at a specific date/time
                             delete <task number> - Delete a task from the list
+                            find <search keyword> - Search for a task that contains <search keyword> in the description.
                             bye - Exit the program
                         Note:
                             All datetime should be in the format of "dd/MM/yyyy HHmm", for example: 27/08/2025 1000
