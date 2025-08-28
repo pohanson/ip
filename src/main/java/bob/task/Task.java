@@ -5,15 +5,28 @@ import java.time.format.DateTimeFormatter;
 
 import bob.exception.InvalidInputException;
 
+/**
+ * Task must be inherited from.
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Constructs a Task.
+     * 
+     * @param description description for the task
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
+    /**
+     * Converts the task back to how the user input it.
+     * 
+     * @return the string representation of the task
+     */
     abstract String toInputString();
 
     @Override
@@ -21,20 +34,35 @@ public abstract class Task {
         return String.format("[%s] %s", getStatusIcon(), description);
     }
 
+    /**
+     * Gets the status icon based on its `isDone`
+     */
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
     }
 
+    /**
+     * Marks the task as done.
+     */
     public Task markDone() {
         this.isDone = true;
         return this;
     }
 
+    /**
+     * Marks the task as not done.
+     */
     public Task unmarkDone() {
         this.isDone = false;
         return this;
     }
 
+    /**
+     * Creates and returns the correct Task subclass object from an input string.
+     * 
+     * @param input input string given. Should contains the task type.
+     * @throws InvalidInputException
+     */
     public static Task createFromString(String input) throws InvalidInputException {
         if (input.startsWith("todo")) {
             return ToDos.parse(input);
@@ -49,8 +77,9 @@ public abstract class Task {
     }
 
     /**
-     * Parses an input string in the format of "dd/MM/yyyy HHmm", for example,
-     * "27/08/2025 1000"
+     * Parses an input string in the format of "dd/MM/yyyy HHmm".
+     * 
+     * Example of a valid input string: "27/08/2025 1000"
      * 
      * @param input the date string to parse
      */
@@ -60,7 +89,9 @@ public abstract class Task {
     }
 
     /**
-     * Formats a LocalDateTime object into a string. eg. "27 Aug 2025 10:00"
+     * Formats a LocalDateTime object into a string.
+     * 
+     * Example of the returned string: "27 Aug 2025 10:00"
      */
     public static String formatDateTime(LocalDateTime dateTime) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
@@ -68,7 +99,9 @@ public abstract class Task {
     }
 
     /**
-     * Formats a LocalDateTime object into the input string. eg. "27/08/2025 1000"
+     * Formats a LocalDateTime object into the input string.
+     * 
+     * Example of the returned string: "27/08/2025 1000"
      */
     public static String toInputStringDateTime(LocalDateTime dateTime) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
