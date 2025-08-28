@@ -35,6 +35,16 @@ public abstract class Task {
         return this;
     }
 
+    /**
+     * Checks if the task description contains the given keyword.
+     * 
+     * @param keyword the keyword to search for
+     * @return true if the description contains the keyword, false otherwise
+     */
+    public Boolean containsDescription(String keyword) {
+        return description.contains(keyword);
+    }
+
     public static Task createFromString(String input) throws InvalidInputException {
         if (input.startsWith("todo")) {
             return ToDos.parse(input);
