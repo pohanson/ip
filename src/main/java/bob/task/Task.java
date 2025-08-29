@@ -68,7 +68,8 @@ public abstract class Task {
     }
 
     /**
-     * Creates and returns the correct Task subclass object from an input string.
+     * Creates and returns the correct Task subclass object from an input
+     * string.
      * 
      * @param input input string given. Should contains the task type.
      * @throws InvalidInputException
@@ -83,7 +84,7 @@ public abstract class Task {
         if (input.startsWith("event")) {
             return Events.parse(input);
         }
-        throw new InvalidInputException("Invalid task type: " + input + "\nValid types are: todo");
+        throw new InvalidInputException("Invalid task type: " + input + "\nValid types are: todo, deadline, event");
     }
 
     /**
