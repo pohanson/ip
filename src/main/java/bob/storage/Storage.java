@@ -12,9 +12,19 @@ import bob.exception.InvalidInputException;
 import bob.task.Task;
 import bob.task.TaskList;
 
+/**
+ * Storage handles loading tasklist from a file and saving it.
+ */
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs Storage.
+     * 
+     * It will also create relevant directories, if it does not exists.
+     * 
+     * @param filePath the file path of the storage.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
         Path path = Paths.get(filePath);
@@ -28,10 +38,17 @@ public class Storage {
         }
     }
 
+    /** Gets the file based on filePath provided in constructor. */
     private File getFile() throws IOException {
         return Paths.get(this.filePath).toFile();
     }
 
+    /**
+     * Saves the task list to the file.
+     * 
+     * @param tasks the task list to save
+     * @throws IOException when file could not be written to.
+     */
     public void saveTaskList(TaskList tasks) throws IOException {
         File file = this.getFile();
         FileWriter fw = new FileWriter(file);
@@ -42,6 +59,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads the task list from the file.
+     * 
+     * @throws IOException           when file could not be read from.
+     * @throws InvalidInputException when file could not be parsed properly.
+     */
     public TaskList loadTaskList() throws IOException, InvalidInputException {
         File file = this.getFile();
         Scanner s = new Scanner(file);

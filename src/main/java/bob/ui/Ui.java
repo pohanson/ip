@@ -1,20 +1,36 @@
 package bob.ui;
 
+/**
+ * User Interface for the application.
+ */
 public class Ui {
-
+    /**
+     * Prints a line separator.
+     */
     public void printLine() {
         System.out.println("=".repeat(80));
     }
 
+    /**
+     * Shows an error message.
+     */
     public void showError(String message) {
         System.out.println("\u001B[31mError: " + message + "\u001B[0m");
     }
 
+    /**
+     * Prints a section header.
+     * 
+     * It is just the string s, with a line below.
+     */
     public void printSection(String s) {
         System.out.println(s);
         this.printLine();
     }
 
+    /**
+     * Prints the available commands.
+     */
     public void printHelp() {
         System.out.println(
                 """

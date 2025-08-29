@@ -5,10 +5,20 @@ import java.time.format.DateTimeParseException;
 
 import bob.exception.InvalidInputException;
 
+/**
+ * Tasks that start at a specific date/time and ends at a specific date/time.
+ */
 public class Events extends Task {
     private LocalDateTime start;
     private LocalDateTime end;
 
+    /**
+     * Constructs Events.
+     * 
+     * @param description description of the task
+     * @param start       start time of the task
+     * @param end         end time of the task
+     */
     public Events(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
         this.start = start;
@@ -21,6 +31,12 @@ public class Events extends Task {
                 super.formatDateTime(end));
     }
 
+    /**
+     * Parses the input string given into Events object.
+     * 
+     * @param input should be of the format: event <description> /from <start
+     *              datetime> /to <end datetime>
+     */
     public static Events parse(String input) throws InvalidInputException {
         String[] params = input.replaceFirst("event", "").split("/from|/to");
         if (params.length != 3 || params[0].trim().isEmpty() || params[1].trim().isEmpty()
@@ -41,6 +57,7 @@ public class Events extends Task {
         }
     }
 
+    @Override
     public String toInputString() {
         return "event " + this.description + " /from " + super.toInputStringDateTime(this.start) + " /to "
                 + super.toInputStringDateTime(this.end);

@@ -5,9 +5,18 @@ import java.time.format.DateTimeParseException;
 
 import bob.exception.InvalidInputException;
 
+/**
+ * Tasks that need to be done before a specific date/time.
+ */
 public class Deadlines extends Task {
     private LocalDateTime deadline;
 
+    /**
+     * Constructs Deadlines.
+     * 
+     * @param description description for the task
+     * @param deadline    deadline for the task
+     */
     public Deadlines(String description, LocalDateTime deadline) {
         super(description);
         this.deadline = deadline;
@@ -18,6 +27,11 @@ public class Deadlines extends Task {
         return String.format("[D]%s (due: %s)", super.toString(), Task.formatDateTime(deadline));
     }
 
+    /**
+     * Parses the input string given into Deadlines object.
+     * 
+     * @param input should be of the format: deadline <description> /by <datetime>
+     */
     public static Deadlines parse(String input) throws InvalidInputException {
         String[] params = input.replaceFirst("deadline", "").split("/by");
         if (params.length != 2 || params[0].trim().isEmpty() || params[1].trim().isEmpty()) {
@@ -35,6 +49,7 @@ public class Deadlines extends Task {
 
     }
 
+    @Override
     public String toInputString() {
         return "deadline " + this.description + " /by " + Task.toInputStringDateTime(this.deadline);
     }

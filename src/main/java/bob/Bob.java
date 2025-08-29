@@ -11,11 +11,21 @@ import bob.storage.Storage;
 import bob.task.TaskList;
 import bob.ui.Ui;
 
+/**
+ * Bob is the main class for the application.
+ */
 public class Bob {
     private TaskList tasks;
     private Storage storage;
     private Ui ui;
 
+    /**
+     * Constructs Bob.
+     * 
+     * It constructs and initialises tasks, storage and ui.
+     * 
+     * @param filePath the file path to load tasks from and save tasks to.
+     */
     public Bob(String filePath) {
         this.storage = new Storage(filePath);
         this.ui = new Ui();
@@ -31,6 +41,9 @@ public class Bob {
 
     }
 
+    /**
+     * Main run loop for the application.
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
         ui.printSection("Hello! I'm Bob.\nHow can I help you?");
@@ -45,6 +58,9 @@ public class Bob {
         scanner.close();
     }
 
+    /**
+     * Entry point for the app.
+     */
     public static void main(String[] args) {
         new Bob("data/tasklist.txt").run();
     }
