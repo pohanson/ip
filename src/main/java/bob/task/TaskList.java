@@ -67,10 +67,15 @@ public class TaskList {
     }
 
     public String stringifyTasks() {
+        return stringifyTasks("");
+    }
+
+    public String stringifyTasks(String filterKeyword) {
         if (tasks.isEmpty()) {
             return "No tasks in list.";
         } else
             return IntStream.range(0, tasks.size())
+                    .filter(i -> tasks.get(i).containsDescription(filterKeyword))
                     .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
                     .reduce("", (acc, cur) -> acc + "\n\t" + cur);
     }
