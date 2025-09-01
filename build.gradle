@@ -32,6 +32,10 @@ application {
     mainClass.set("bob.Bob")
 }
 
+checkstyle {
+    toolVersion = '11.0.0'
+}
+
 shadowJar {
     archiveBaseName = "Bob"
     archiveClassifier = null
