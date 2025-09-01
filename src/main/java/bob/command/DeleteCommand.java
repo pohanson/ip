@@ -10,7 +10,7 @@ public class DeleteCommand extends Command {
 
     /**
      * Constructs DeleteCommand.
-     * 
+     *
      * @param taskNumber The task number to be deleted, 0-indexed.
      */
     public DeleteCommand(int taskNumber) {
@@ -25,8 +25,7 @@ public class DeleteCommand extends Command {
         if (tasks.validateTaskIndex(taskNumber)) {
             Task removedTask = tasks.remove(taskNumber);
             ui.printSection(String.format("I've removed this task:\n\t%s\nNow you've %d tasks in the list.",
-                    removedTask,
-                    tasks.size()));
+                                            removedTask, tasks.size()));
         } else {
             ui.printSection("Invalid task number: " + taskNumber);
         }

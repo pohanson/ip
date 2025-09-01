@@ -11,7 +11,7 @@ import bob.storage.Storage;
  */
 public class TaskList {
     private final ArrayList<Task> tasks = new ArrayList<>(100);
-    private Storage storage;
+    private final Storage storage;
 
     /**
      * Constructs TaskList.
@@ -43,7 +43,7 @@ public class TaskList {
 
     /**
      * Adds a tasks to the list.
-     * 
+     *
      * @param t the task to add
      * @return true if the task was added successfully
      */
@@ -57,7 +57,7 @@ public class TaskList {
 
     /**
      * Gets a task from the list.
-     * 
+     *
      * @param index the 0-based index of the task
      */
     public Task get(int index) {
@@ -66,7 +66,7 @@ public class TaskList {
 
     /**
      * Marks a task as done.
-     * 
+     *
      * @param index the 0-based index of the task
      */
     public Task markDone(int index) {
@@ -77,7 +77,7 @@ public class TaskList {
 
     /**
      * Unmarks a task as done.
-     * 
+     *
      * @param index the 0-based index of the task
      */
     public Task unmarkDone(int index) {
@@ -88,7 +88,7 @@ public class TaskList {
 
     /**
      * Removes a task from the list.
-     * 
+     *
      * @param index the 0-based index of the task
      */
     public Task remove(int index) {
@@ -99,7 +99,7 @@ public class TaskList {
 
     /**
      * Validates the task index.
-     * 
+     *
      * @param index the 0-based index of the task
      * @return true if the index is valid, else false.
      */
@@ -120,14 +120,21 @@ public class TaskList {
         return stringifyTasks("");
     }
 
+    /**
+     * Filter and converts the tasks in the list as a string for output
+     *
+     * @param filterKeyword the keyword to search by.
+     */
     public String stringifyTasks(String filterKeyword) {
         if (tasks.isEmpty()) {
             return "No tasks in list.";
-        } else
-            return IntStream.range(0, tasks.size())
+        } else {
+            return IntStream
+                    .range(0, tasks.size())
                     .filter(i -> tasks.get(i).containsDescription(filterKeyword))
                     .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
                     .reduce("", (acc, cur) -> acc + "\n\t" + cur);
+        }
     }
 
     /**

@@ -21,9 +21,9 @@ public class Bob {
 
     /**
      * Constructs Bob.
-     * 
+     *
      * It constructs and initialises tasks, storage and ui.
-     * 
+     *
      * @param filePath the file path to load tasks from and save tasks to.
      */
     public Bob(String filePath) {

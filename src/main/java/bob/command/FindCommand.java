@@ -4,9 +4,17 @@ import bob.storage.Storage;
 import bob.task.TaskList;
 import bob.ui.Ui;
 
+/**
+ * Command to find a task by description
+ */
 public class FindCommand extends Command {
-    private String input;
+    private final String input;
 
+    /**
+     * Constructs FindCommand.
+     *
+     * @param input the string to search.
+     */
     public FindCommand(String input) {
         this.input = input;
     }

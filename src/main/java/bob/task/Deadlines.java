@@ -9,11 +9,11 @@ import bob.exception.InvalidInputException;
  * Tasks that need to be done before a specific date/time.
  */
 public class Deadlines extends Task {
-    private LocalDateTime deadline;
+    private final LocalDateTime deadline;
 
     /**
      * Constructs Deadlines.
-     * 
+     *
      * @param description description for the task
      * @param deadline    deadline for the task
      */
@@ -22,22 +22,17 @@ public class Deadlines extends Task {
         this.deadline = deadline;
     }
 
-    @Override
-    public String toString() {
-        return String.format("[D]%s (due: %s)", super.toString(), Task.formatDateTime(deadline));
-    }
-
     /**
      * Parses the input string given into Deadlines object.
-     * 
-     * @param input should be of the format: deadline <description> /by <datetime>
+     *
+     * @param input should be of the format: deadline [description] /by
+     *              [datetime]
      */
     public static Deadlines parse(String input) throws InvalidInputException {
         String[] params = input.replaceFirst("deadline", "").split("/by");
         if (params.length != 2 || params[0].trim().isEmpty() || params[1].trim().isEmpty()) {
-            throw new InvalidInputException(
-                    "Invalid deadline input: " + input
-                            + "\nExample of valid format: deadline return book /by 01/01/2025 1200");
+            throw new InvalidInputException("Invalid deadline input: " + input
+                    + "\nExample of valid format: deadline return book /by 01/01/2025 1200");
         }
         try {
             LocalDateTime deadline = Task.parseDateTimeString(params[1].trim());
@@ -47,6 +42,11 @@ public class Deadlines extends Task {
                     + "\nExample of valid format: deadline return book /by 01/01/2025 1200");
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[D]%s (due: %s)", super.toString(), Task.formatDateTime(deadline));
     }
 
     @Override
