@@ -9,11 +9,11 @@ import bob.ui.Ui;
  * Command to mark a task as undone.
  */
 public class UnmarkCommand extends Command {
-    private int taskNumber;
+    private final int taskNumber;
 
     /**
      * Constructs UnmarkCommand.
-     * 
+     *
      * @param taskNumber the task number to be marked as done (0-indexed)
      */
     public UnmarkCommand(int taskNumber) {

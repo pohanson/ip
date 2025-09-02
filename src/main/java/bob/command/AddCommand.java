@@ -14,7 +14,7 @@ public class AddCommand extends Command {
 
     /**
      * Constructs AddCommand.
-     * 
+     *
      * @param input the user input
      */
     public AddCommand(String input) {
@@ -29,9 +29,8 @@ public class AddCommand extends Command {
         try {
             Task task = Task.createFromString(input);
             tasks.add(task);
-            ui.printSection(
-                    String.format("I've added this task:\n\t %s\nNow you've %d tasks in the list.", task,
-                            tasks.size()));
+            ui.printSection(String.format("I've added this task:\n\t %s\nNow you've %d tasks in the list.", task,
+                                            tasks.size()));
         } catch (InvalidInputException e) {
             ui.printSection(e.getMessage());
         }

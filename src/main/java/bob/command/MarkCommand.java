@@ -8,11 +8,11 @@ import bob.ui.Ui;
  * Command to mark a task as done.
  */
 public class MarkCommand extends Command {
-    private int taskNumber;
+    private final int taskNumber;
 
     /**
      * Constructs MarkCommand.
-     * 
+     *
      * @param taskNumber the task number to be marked as done (0-indexed)
      */
     public MarkCommand(int taskNumber) {

@@ -13,8 +13,8 @@ public class InvalidCommand extends Command {
 
     /**
      * Constructs InvalidCommand
-     * 
-     * @param input the user input provided
+     *
+     * @param header the user input provided
      */
     public InvalidCommand(String header) {
         this.header = header;
@@ -23,8 +23,8 @@ public class InvalidCommand extends Command {
 
     /**
      * Constructs InvalidCommand
-     * 
-     * @param header  the summary header
+     *
+     * @param header the summary header
      * @param details details about the error
      */
     public InvalidCommand(String header, String details) {
