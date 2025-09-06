@@ -42,6 +42,26 @@ public class Bob {
     }
 
     /**
+     * Entry point for the app.
+     */
+    public static void main(String[] args) {
+        new Bob("data/tasklist.txt").run();
+    }
+
+    /**
+     * Gets response from Bob for the given input.
+     *
+     * @param input the user input
+     * @return the response from Bob
+     */
+    public String getResponse(String input) {
+        Command command = Parser.parse(input);
+        // Capture the output instead of printing it directly
+        command.execute(tasks, ui, storage);
+        return ui.getResponse();
+    }
+
+    /**
      * Main run loop for the application.
      */
     public void run() {
@@ -56,12 +76,5 @@ public class Bob {
             }
         }
         scanner.close();
-    }
-
-    /**
-     * Entry point for the app.
-     */
-    public static void main(String[] args) {
-        new Bob("data/tasklist.txt").run();
     }
 }

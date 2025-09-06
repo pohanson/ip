@@ -20,7 +20,7 @@ public class Parser {
      * @param input the user input provided, including the action word (eg.
      *              list, bye, mark, etc.)
      * @return the command according to the input. If the command is invalid, it
-     *      will return an InvalidCommand.
+     *         will return an InvalidCommand.
      */
     public static Command parse(String input) {
         String[] parts = input.split(" ", 2);

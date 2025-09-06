@@ -8,8 +8,8 @@ import bob.ui.Ui;
  * Command to handle invalid user input.
  */
 public class InvalidCommand extends Command {
-    private String header;
-    private String details;
+    private final String header;
+    private final String details;
 
     /**
      * Constructs InvalidCommand
@@ -24,7 +24,7 @@ public class InvalidCommand extends Command {
     /**
      * Constructs InvalidCommand
      *
-     * @param header the summary header
+     * @param header  the summary header
      * @param details details about the error
      */
     public InvalidCommand(String header, String details) {
