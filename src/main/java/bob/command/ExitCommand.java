@@ -4,7 +4,9 @@ package bob.command;
  * Command to exit the application.
  */
 public class ExitCommand extends Command {
-    /** Constructs ExitCommand. */
+    /**
+     * Constructs ExitCommand.
+     */
     public ExitCommand() {
     }
 

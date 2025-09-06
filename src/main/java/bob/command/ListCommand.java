@@ -8,7 +8,9 @@ import bob.ui.Ui;
  * Command to list all tasks.
  */
 public class ListCommand extends Command {
-    /** Constructs ListCommand. */
+    /**
+     * Constructs ListCommand.
+     */
     public ListCommand() {
     }
 

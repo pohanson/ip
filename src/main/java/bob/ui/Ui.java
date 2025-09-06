@@ -4,6 +4,8 @@ package bob.ui;
  * User Interface for the application.
  */
 public class Ui {
+    private final StringBuilder responseBuffer = new StringBuilder();
+
     /**
      * Prints a line separator.
      */
@@ -15,6 +17,7 @@ public class Ui {
      * Shows an error message.
      */
     public void showError(String message) {
+        responseBuffer.append("Error: " + message + "\n");
         System.out.println("\u001B[31mError: " + message + "\u001B[0m");
     }
 
@@ -24,6 +27,7 @@ public class Ui {
      * It is just the string s, with a line below.
      */
     public void printSection(String s) {
+        responseBuffer.append(s);
         System.out.println(s);
         this.printLine();
     }
@@ -32,7 +36,7 @@ public class Ui {
      * Prints the available commands.
      */
     public void printHelp() {
-        System.out.println("""
+        String helpMessage = """
                 Available commands:
                     list - List all tasks
                     mark <task number> - Mark a task as done
@@ -46,6 +50,14 @@ public class Ui {
                     bye - Exit the program
                 Note:
                     All datetime should be in the format of "dd/MM/yyyy HHmm", for example: 27/08/2025 1000
-                """);
+                """;
+        responseBuffer.append(helpMessage);
+        System.out.println(helpMessage);
+    }
+
+    public String getResponse() {
+        String res = responseBuffer.toString();
+        responseBuffer.setLength(0); // Clear the buffer
+        return res;
     }
 }

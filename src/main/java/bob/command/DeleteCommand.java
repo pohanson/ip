@@ -6,7 +6,7 @@ import bob.task.Task;
  * Command to delete a task.
  */
 public class DeleteCommand extends Command {
-    private int taskNumber;
+    private final int taskNumber;
 
     /**
      * Constructs DeleteCommand.
@@ -25,7 +25,7 @@ public class DeleteCommand extends Command {
         if (tasks.validateTaskIndex(taskNumber)) {
             Task removedTask = tasks.remove(taskNumber);
             ui.printSection(String.format("I've removed this task:\n\t%s\nNow you've %d tasks in the list.",
-                                            removedTask, tasks.size()));
+                    removedTask, tasks.size()));
         } else {
             ui.printSection("Invalid task number: " + taskNumber);
         }
