@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class MainWindow extends AnchorPane {
     @FXML
@@ -47,6 +48,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+        if (input.equals("bye")) {
+            Stage stage = (Stage) sendButton.getScene().getWindow();
+            stage.close();
+        }
         String response = bob.getResponse(input);
         dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage),
                                         DialogBox.getBobDialog(response, bobImage));
