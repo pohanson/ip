@@ -31,10 +31,16 @@ public class Parser {
         case "bye":
             return new ExitCommand();
         case "mark": {
+            if (parts.length != 2) {
+                return new InvalidCommand(input, "The mark command requires a task number.");
+            }
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             return new MarkCommand(taskNumber);
         }
         case "unmark": {
+            if (parts.length != 2) {
+                return new InvalidCommand(input, "The unmark command requires a task number.");
+            }
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             return new UnmarkCommand(taskNumber);
         }
@@ -46,10 +52,13 @@ public class Parser {
             return new AddCommand(input);
         }
         case "delete": {
+            if (parts.length != 2) {
+                return new InvalidCommand(input, "The delete command requires a task number.");
+            }
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             return new DeleteCommand(taskNumber);
         }
-case "find": {
+        case "find": {
             if (parts.length != 2) {
                 return new InvalidCommand(input, "The find command requires a search keyword.");
             }
