@@ -4,6 +4,7 @@ import bob.command.AddCommand;
 import bob.command.Command;
 import bob.command.DeleteCommand;
 import bob.command.ExitCommand;
+import bob.command.FindCommand;
 import bob.command.InvalidCommand;
 import bob.command.ListCommand;
 import bob.command.MarkCommand;
@@ -47,6 +48,12 @@ public class Parser {
         case "delete": {
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             return new DeleteCommand(taskNumber);
+        }
+case "find": {
+            if (parts.length != 2) {
+                return new InvalidCommand(input, "The find command requires a search keyword.");
+            }
+            return new FindCommand(parts[1]);
         }
         default: {
             return new InvalidCommand(input);
