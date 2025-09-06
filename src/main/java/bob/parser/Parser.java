@@ -4,6 +4,7 @@ import bob.command.AddCommand;
 import bob.command.Command;
 import bob.command.DeleteCommand;
 import bob.command.ExitCommand;
+import bob.command.FindCommand;
 import bob.command.InvalidCommand;
 import bob.command.ListCommand;
 import bob.command.MarkCommand;
@@ -30,10 +31,16 @@ public class Parser {
         case "bye":
             return new ExitCommand();
         case "mark": {
+            if (parts.length != 2) {
+                return new InvalidCommand(input, "The mark command requires a task number.");
+            }
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             return new MarkCommand(taskNumber);
         }
         case "unmark": {
+            if (parts.length != 2) {
+                return new InvalidCommand(input, "The unmark command requires a task number.");
+            }
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             return new UnmarkCommand(taskNumber);
         }
@@ -45,8 +52,17 @@ public class Parser {
             return new AddCommand(input);
         }
         case "delete": {
+            if (parts.length != 2) {
+                return new InvalidCommand(input, "The delete command requires a task number.");
+            }
             int taskNumber = Integer.parseInt(parts[1]) - 1;
             return new DeleteCommand(taskNumber);
+        }
+        case "find": {
+            if (parts.length != 2) {
+                return new InvalidCommand(input, "The find command requires a search keyword.");
+            }
+            return new FindCommand(parts[1]);
         }
         default: {
             return new InvalidCommand(input);
