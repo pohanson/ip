@@ -39,9 +39,9 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            stage.setMinHeight(500);
+            stage.setMinWidth(700);
             stage.setScene(scene);
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
             fxmlLoader.<MainWindow>getController().setBob(bob);
 
             stage.show();
