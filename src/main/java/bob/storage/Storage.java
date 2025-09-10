@@ -36,6 +36,7 @@ public class Storage {
                 System.out.println("Error creating file: " + e.getMessage());
             }
         }
+        assert path.toFile().exists() : "File should exist after constructor";
     }
 
     /**
