@@ -37,6 +37,7 @@ public class Main extends Application {
     public void start(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            assert !fxmlLoader.getLocation().getFile().equals("") : "FXML file not loaded";
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setMinHeight(500);
