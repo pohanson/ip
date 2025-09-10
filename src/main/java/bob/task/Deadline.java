@@ -14,8 +14,8 @@ public class Deadline extends Task {
     /**
      * Constructs Deadlines.
      *
-     * @param description description for the task
-     * @param deadline    deadline for the task
+     * @param description description for the task.
+     * @param deadline    deadline for the task.
      */
     public Deadline(String description, LocalDateTime deadline) {
         super(description);
@@ -26,7 +26,7 @@ public class Deadline extends Task {
      * Parses the input string given into Deadlines object.
      *
      * @param input should be of the format: deadline [description] /by
-     *              [datetime]
+     *              [datetime].
      */
     public static Deadline parse(String input) throws InvalidInputException {
         String[] params = input.replaceFirst("deadline", "").split("/by");

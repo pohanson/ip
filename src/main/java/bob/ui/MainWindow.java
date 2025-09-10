@@ -1,5 +1,7 @@
 package bob.ui;
 
+import java.util.Objects;
+
 import bob.Bob;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,23 +12,23 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * MainWindow that handles interaction in the main window.
+ */
 public class MainWindow extends AnchorPane {
+    private final Image userImage = new Image(
+            Objects.requireNonNull(this.getClass().getResourceAsStream("/images/DaUser.png")));
+    private final Image bobImage = new Image(
+            Objects.requireNonNull(this.getClass().getResourceAsStream("/images/chatBob.jpg")));
     @FXML
     private ScrollPane scrollPane;
-
     @FXML
     private VBox dialogContainer;
-
     @FXML
     private TextField userInput;
-
     @FXML
     private Button sendButton;
-
     private Bob bob;
-
-    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private final Image bobImage = new Image(this.getClass().getResourceAsStream("/images/chatBob.jpg"));
 
     @FXML
     public void initialize() {
@@ -54,7 +56,7 @@ public class MainWindow extends AnchorPane {
         }
         String response = bob.getResponse(input);
         dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage),
-                                        DialogBox.getBobDialog(response, bobImage));
+                DialogBox.getBobDialog(response, bobImage));
         userInput.clear();
 
     }

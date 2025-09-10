@@ -9,13 +9,16 @@ import bob.exception.InvalidInputException;
  * Task must be inherited from.
  */
 public abstract class Task {
+    private static final String DATETIME_INPUT_FORMAT = "dd/MM/yyyy HHmm";
+    private static final String DATETIME_OUTPUT_FORMAT = "dd MMM yyyy HH:mm";
+
     protected String description;
     protected boolean isDone;
 
     /**
      * Constructs a Task.
      *
-     * @param description description for the task
+     * @param description description for the task.
      */
     public Task(String description) {
         this.description = description;
@@ -47,10 +50,10 @@ public abstract class Task {
      * <p>
      * Example of a valid input string: "27/08/2025 1000"
      *
-     * @param input the date string to parse
+     * @param input the date string to parse.
      */
     public static LocalDateTime parseDateTimeString(String input) {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATETIME_INPUT_FORMAT);
         return LocalDateTime.parse(input, dateFormat);
     }
 
@@ -60,7 +63,7 @@ public abstract class Task {
      * Example of the returned string: "27 Aug 2025 10:00"
      */
     public static String formatDateTime(LocalDateTime dateTime) {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATETIME_OUTPUT_FORMAT);
         return dateTime.format(dateFormat);
     }
 
@@ -70,7 +73,7 @@ public abstract class Task {
      * Example of the returned string: "27/08/2025 1000"
      */
     public static String toInputStringDateTime(LocalDateTime dateTime) {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATETIME_INPUT_FORMAT);
         return dateTime.format(dateFormat);
     }
 
@@ -112,7 +115,7 @@ public abstract class Task {
     /**
      * Checks if the task description contains the given keyword.
      *
-     * @param keyword the keyword to search for
+     * @param keyword the keyword to search for.
      * @return true if the description contains the keyword, false otherwise
      */
     public Boolean containsDescription(String keyword) {

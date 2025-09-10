@@ -30,6 +30,8 @@ public class Storage {
     public Storage(String filePath) {
         this.filePath = filePath;
         Path path = Paths.get(filePath);
+
+        // create file if it doesn't exist
         if (!path.toFile().exists()) {
             try {
                 Files.createDirectories(path.getParent());
@@ -38,6 +40,7 @@ public class Storage {
                 System.out.println("Error creating file: " + e.getMessage());
             }
         }
+
         assert path.toFile().exists() : "File should exist after constructor";
     }
 
@@ -51,7 +54,7 @@ public class Storage {
     /**
      * Saves the task list to the file.
      *
-     * @param tasks the task list to save
+     * @param tasks the task list to save.
      * @throws IOException when file could not be written to.
      */
     public void saveTaskList(TaskList tasks) throws IOException {
@@ -67,7 +70,7 @@ public class Storage {
     /**
      * Loads the task list from the file.
      *
-     * @throws IOException           when file could not be read from.
+     * @throws IOException when file could not be read from.
      * @throws InvalidInputException when file could not be parsed properly.
      */
     public TaskList loadTaskList() throws IOException, InvalidInputException {
@@ -77,6 +80,7 @@ public class Storage {
             TaskList tasks = new TaskList(this);
             while (s.hasNextLine()) {
                 String[] line = s.nextLine().split(" ", 2);
+
                 if (line.length != 2) {
                     System.out.println("Invalid task format in storage: " + line);
                     continue;
@@ -94,4 +98,6 @@ public class Storage {
             s.close();
         }
     }
+
+    private
 }

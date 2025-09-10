@@ -15,9 +15,9 @@ public class Event extends Task {
     /**
      * Constructs Events.
      *
-     * @param description description of the task
-     * @param start       start time of the task
-     * @param end         end time of the task
+     * @param description description of the task.
+     * @param start       start time of the task.
+     * @param end         end time of the task.
      */
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
@@ -29,7 +29,7 @@ public class Event extends Task {
      * Parses the input string given into Events object.
      *
      * @param input should be of the format: event [description] /from [start
-     *              datetime] /to [end datetime]
+     *              datetime] /to [end datetime].
      */
     public static Event parse(String input) throws InvalidInputException {
         String[] params = input.replaceFirst("event", "").split("/from|/to");

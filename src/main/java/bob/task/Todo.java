@@ -9,7 +9,7 @@ public class Todo extends Task {
     /**
      * Constructs Todos.
      *
-     * @param description description for the task
+     * @param description description for the task.
      */
     public Todo(String description) {
         super(description);
@@ -18,7 +18,7 @@ public class Todo extends Task {
     /**
      * Parses the input string given into ToDos object.
      *
-     * @param input should be of the format: todo [description]
+     * @param input should be of the format: todo [description].
      */
     public static Todo parse(String input) throws InvalidInputException {
         String taskName = input.replaceFirst("todo", "").trim();
