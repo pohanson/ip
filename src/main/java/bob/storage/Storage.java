@@ -16,6 +16,8 @@ import bob.task.TaskList;
  * Storage handles loading tasklist from a file and saving it.
  */
 public class Storage {
+    // not declared as constant so that I could use a different file path
+    // if needed.
     private final String filePath;
 
     /**
@@ -36,6 +38,7 @@ public class Storage {
                 System.out.println("Error creating file: " + e.getMessage());
             }
         }
+        assert path.toFile().exists() : "File should exist after constructor";
     }
 
     /**

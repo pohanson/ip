@@ -42,7 +42,7 @@ public class Bob {
     }
 
     /**
-     * Entry point for the app.
+     * Starts the application
      */
     public static void main(String[] args) {
         new Bob("data/tasklist.txt").run();
@@ -62,7 +62,7 @@ public class Bob {
     }
 
     /**
-     * Main run loop for the application.
+     * Runs the main loop for the command line application.
      */
     public void run() {
         Scanner scanner = new Scanner(System.in);

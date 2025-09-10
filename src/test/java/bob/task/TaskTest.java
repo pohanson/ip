@@ -13,7 +13,7 @@ public class TaskTest {
     public void createFromString_validTodo_success() throws InvalidInputException {
         String input = "todo read";
         Task task = Task.createFromString(input);
-        assertEquals(ToDos.class, task.getClass());
+        assertEquals(Todo.class, task.getClass());
         assertEquals("[T][ ] read", task.toString());
     }
 
@@ -31,7 +31,7 @@ public class TaskTest {
     public void createFromString_validDeadline_success() throws InvalidInputException {
         String input = "deadline return book /by 01/01/2025 1200";
         Task task = Task.createFromString(input);
-        assertEquals(Deadlines.class, task.getClass());
+        assertEquals(Deadline.class, task.getClass());
         assertEquals("[D][ ] return book (due: 01 Jan 2025 12:00)", task.toString());
     }
 
@@ -49,7 +49,7 @@ public class TaskTest {
     public void createFromString_validEvent_success() throws InvalidInputException {
         String input = "event project meeting /from 01/01/2025 1200 /to 01/01/2025 1400";
         Task task = Task.createFromString(input);
-        assertEquals(Events.class, task.getClass());
+        assertEquals(Event.class, task.getClass());
         assertEquals("[E][ ] project meeting (01 Jan 2025 12:00 - 01 Jan 2025 14:00)", task.toString());
     }
 

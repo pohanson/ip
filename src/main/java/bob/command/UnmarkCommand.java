@@ -25,7 +25,7 @@ public class UnmarkCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        if (tasks.validateTaskIndex(taskNumber)) {
+        if (tasks.isValidTaskIndex(taskNumber)) {
             Task task = tasks.unmarkDone(taskNumber);
             ui.printSection("I've marked this task as undone:\n\t" + task);
         } else {

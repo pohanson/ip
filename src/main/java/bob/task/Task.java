@@ -31,13 +31,13 @@ public abstract class Task {
      */
     public static Task createFromString(String input) throws InvalidInputException {
         if (input.startsWith("todo")) {
-            return ToDos.parse(input);
+            return Todo.parse(input);
         }
         if (input.startsWith("deadline")) {
-            return Deadlines.parse(input);
+            return Deadline.parse(input);
         }
         if (input.startsWith("event")) {
-            return Events.parse(input);
+            return Event.parse(input);
         }
         throw new InvalidInputException("Invalid task type: " + input + "\nValid types are: todo, deadline, event");
     }

@@ -103,7 +103,7 @@ public class TaskList {
      * @param index the 0-based index of the task
      * @return true if the index is valid, else false.
      */
-    public boolean validateTaskIndex(int index) {
+    public boolean isValidTaskIndex(int index) {
         return (index >= 0 && index < tasks.size());
 
     }

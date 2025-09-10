@@ -5,13 +5,13 @@ import bob.exception.InvalidInputException;
 /**
  * Tasks without any date/time attached to it.
  */
-public class ToDos extends Task {
+public class Todo extends Task {
     /**
      * Constructs Todos.
      *
      * @param description description for the task
      */
-    public ToDos(String description) {
+    public Todo(String description) {
         super(description);
     }
 
@@ -20,13 +20,13 @@ public class ToDos extends Task {
      *
      * @param input should be of the format: todo [description]
      */
-    public static ToDos parse(String input) throws InvalidInputException {
+    public static Todo parse(String input) throws InvalidInputException {
         String taskName = input.replaceFirst("todo", "").trim();
         if (taskName.isEmpty()) {
             throw new InvalidInputException("Invalid todo task (description cannot be empty): " + input
                     + "\nExample of valid format: 'todo borrow book'");
         }
-        return new ToDos(taskName);
+        return new Todo(taskName);
     }
 
     @Override
