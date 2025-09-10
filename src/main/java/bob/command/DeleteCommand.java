@@ -22,7 +22,7 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(bob.task.TaskList tasks, bob.ui.Ui ui, bob.storage.Storage storage) {
-        if (tasks.validateTaskIndex(taskNumber)) {
+        if (tasks.isValidTaskIndex(taskNumber)) {
             Task removedTask = tasks.remove(taskNumber);
             ui.printSection(String.format("I've removed this task:\n\t%s\nNow you've %d tasks in the list.",
                     removedTask, tasks.size()));

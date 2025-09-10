@@ -24,7 +24,7 @@ public class MarkCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        if (tasks.validateTaskIndex(taskNumber)) {
+        if (tasks.isValidTaskIndex(taskNumber)) {
             tasks.markDone(taskNumber);
             ui.printSection("I've marked this task as done:\n\t" + tasks.get(taskNumber));
         } else {

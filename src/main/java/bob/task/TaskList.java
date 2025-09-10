@@ -10,7 +10,8 @@ import bob.storage.Storage;
  * TaskList manages a list of tasks and helps to perform action on them.
  */
 public class TaskList {
-    private final ArrayList<Task> tasks = new ArrayList<>(100);
+    private static final int MAX_TASKS = 100;
+    private final ArrayList<Task> tasks = new ArrayList<>(MAX_TASKS);
     private final Storage storage;
 
     /**
@@ -20,9 +21,6 @@ public class TaskList {
         this.storage = storage;
     }
 
-    /**
-     * Returns the list of tasks.
-     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
@@ -42,9 +40,9 @@ public class TaskList {
     }
 
     /**
-     * Adds a tasks to the list.
+     * Adds a task to the list.
      *
-     * @param t the task to add
+     * @param t the task to add.
      * @return true if the task was added successfully
      */
     public boolean add(Task t) {
@@ -58,7 +56,7 @@ public class TaskList {
     /**
      * Gets a task from the list.
      *
-     * @param index the 0-based index of the task
+     * @param index the 0-based index of the task.
      */
     public Task get(int index) {
         return tasks.get(index);
@@ -67,7 +65,7 @@ public class TaskList {
     /**
      * Marks a task as done.
      *
-     * @param index the 0-based index of the task
+     * @param index the 0-based index of the task.
      */
     public Task markDone(int index) {
         Task t = tasks.get(index).markDone();
@@ -78,7 +76,7 @@ public class TaskList {
     /**
      * Unmarks a task as done.
      *
-     * @param index the 0-based index of the task
+     * @param index the 0-based index of the task.
      */
     public Task unmarkDone(int index) {
         Task t = tasks.get(index).unmarkDone();
@@ -89,7 +87,7 @@ public class TaskList {
     /**
      * Removes a task from the list.
      *
-     * @param index the 0-based index of the task
+     * @param index the 0-based index of the task.
      */
     public Task remove(int index) {
         Task t = tasks.remove(index);
@@ -100,10 +98,10 @@ public class TaskList {
     /**
      * Validates the task index.
      *
-     * @param index the 0-based index of the task
+     * @param index the 0-based index of the task.
      * @return true if the index is valid, else false.
      */
-    public boolean validateTaskIndex(int index) {
+    public boolean isValidTaskIndex(int index) {
         return (index >= 0 && index < tasks.size());
 
     }
@@ -128,13 +126,10 @@ public class TaskList {
     public String stringifyTasks(String filterKeyword) {
         if (tasks.isEmpty()) {
             return "No tasks in list.";
-        } else {
-            return IntStream
-                    .range(0, tasks.size())
-                    .filter(i -> tasks.get(i).containsDescription(filterKeyword))
-                    .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
-                    .reduce("", (acc, cur) -> acc + "\n\t" + cur);
         }
+        return IntStream.range(0, tasks.size()).filter(i -> tasks.get(i).containsDescription(filterKeyword))
+                .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
+                .reduce("", (acc, cur) -> acc + "\n\t" + cur);
     }
 
     /**

@@ -14,9 +14,9 @@ public abstract class Command {
     /**
      * Executes the command, when called by the Bob application.
      *
-     * @param tasks   the TaskList to use
-     * @param ui      the user interface
-     * @param storage the storage
+     * @param tasks   the TaskList to use.
+     * @param ui      the user interface.
+     * @param storage the storage.
      */
     public abstract void execute(TaskList tasks, Ui ui, Storage storage);
 }

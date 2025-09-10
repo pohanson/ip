@@ -8,6 +8,7 @@ import bob.ui.Ui;
  * Command to find a task by description
  */
 public class FindCommand extends Command {
+    /* User input string to search for */
     private final String input;
 
     /**
