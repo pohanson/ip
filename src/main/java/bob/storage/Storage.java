@@ -70,7 +70,7 @@ public class Storage {
     /**
      * Loads the task list from the file.
      *
-     * @throws IOException when file could not be read from.
+     * @throws IOException           when file could not be read from.
      * @throws InvalidInputException when file could not be parsed properly.
      */
     public TaskList loadTaskList() throws IOException, InvalidInputException {

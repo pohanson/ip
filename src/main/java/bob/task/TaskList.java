@@ -2,6 +2,7 @@ package bob.task;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import bob.storage.Storage;
@@ -115,21 +116,30 @@ public class TaskList {
      * Converts the tasks in the list as a string for output.
      */
     public String stringifyTasks() {
-        return stringifyTasks("");
+        return TaskList.stringifyTasks(this.tasks);
     }
 
     /**
-     * Filter and converts the tasks in the list as a string for output
+     * Converts the tasks in the list to a string for output.
      *
-     * @param filterKeyword the keyword to search by.
+     * @param tasks the list of tasks to display.
      */
-    public String stringifyTasks(String filterKeyword) {
-        if (tasks.isEmpty()) {
+    public static String stringifyTasks(List<Task> tasks) {
+        if (tasks.size() == 0) {
             return "No tasks in list.";
         }
-        return IntStream.range(0, tasks.size()).filter(i -> tasks.get(i).containsDescription(filterKeyword))
-                .mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i)))
-                .reduce("", (acc, cur) -> acc + "\n\t" + cur);
+        return IntStream.range(0, tasks.size()).mapToObj(i -> String.format("%d. %s", i + 1, tasks.get(i))).reduce("",
+                (acc, cur) -> acc + "\n\t" + cur);
+    }
+
+    /**
+     * Filters tasks by keyword.
+     *
+     * @param tasks   List of all tasks.
+     * @param keyword the keyword to filter by.
+     */
+    public static List<Task> filterTasksByKeyword(List<Task> tasks, String keyword) {
+        return tasks.stream().filter(task -> task.containsDescription(keyword)).toList();
     }
 
     /**
@@ -139,9 +149,8 @@ public class TaskList {
         if (tasks.isEmpty()) {
             return "";
         } else {
-            return tasks.stream()
-                    .map(task -> (task.isDone ? "1" : "0") + " " + task.toInputString())
-                    .reduce("", (acc, x) -> acc + x + "\n");
+            return tasks.stream().map(task -> (task.isDone ? "1" : "0") + " " + task.toInputString()).reduce("",
+                    (acc, x) -> acc + x + "\n");
         }
     }
 
