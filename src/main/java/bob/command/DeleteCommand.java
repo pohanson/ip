@@ -1,33 +1,47 @@
 package bob.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import bob.task.Task;
+import bob.task.TaskList;
+import bob.ui.Ui;
 
 /**
  * Command to delete a task.
  */
 public class DeleteCommand extends Command {
-    private final int taskNumber;
+    private final Integer[] taskNumbers;
 
     /**
      * Constructs DeleteCommand.
      *
-     * @param taskNumber The task number to be deleted, 0-indexed.
+     * @param taskNumbers The task numbers to be deleted, 1-indexed.
      */
-    public DeleteCommand(int taskNumber) {
-        this.taskNumber = taskNumber;
+    public DeleteCommand(Integer[] taskNumbers) {
+        // Sort in descending order so that the deletion of tasks does not affect the indices of tasks yet to be deleted.
+        this.taskNumbers = Arrays.stream(taskNumbers).sorted((a, b) -> b - a).toArray(Integer[]::new);
     }
 
     /**
-     * Deletes the task at taskNumber (0-indexed)
+     * Deletes the tasks at taskNumbers (1-indexed)
      */
     @Override
     public void execute(bob.task.TaskList tasks, bob.ui.Ui ui, bob.storage.Storage storage) {
-        if (tasks.isValidTaskIndex(taskNumber)) {
-            Task removedTask = tasks.remove(taskNumber);
-            ui.printSection(String.format("I've removed this task:\n\t%s\nNow you've %d tasks in the list.",
-                    removedTask, tasks.size()));
+        if (super.isValidTasks(tasks, taskNumbers)) {
+            this.deleteAllTasks(tasks, ui);
         } else {
-            ui.printSection("Invalid task number: " + taskNumber);
+            ui.printSection("Invalid task number(s) provided: " + Arrays.toString(taskNumbers));
         }
+    }
+
+    private void deleteAllTasks(TaskList tasks, Ui ui) {
+        ArrayList<Task> tasksDeleted = new ArrayList<>();
+        for (int taskNumber : taskNumbers) {
+            tasksDeleted.add(tasks.remove(taskNumber - 1));
+        }
+        String prompt = taskNumbers.length == 1 ? "I've removed this task:\n\t" : "I've removed these tasks:\n\t";
+        ui.printSection(prompt + TaskList.stringifyTasks(tasksDeleted)
+                + String.format("\nNow you've %d tasks in the list.", tasks.size()));
     }
 }

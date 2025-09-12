@@ -1,6 +1,10 @@
 package bob.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import bob.storage.Storage;
+import bob.task.Task;
 import bob.task.TaskList;
 import bob.ui.Ui;
 
@@ -8,27 +12,37 @@ import bob.ui.Ui;
  * Command to mark a task as done.
  */
 public class MarkCommand extends Command {
-    private final int taskNumber;
+    private final Integer[] taskNumbers;
 
     /**
      * Constructs MarkCommand.
      *
-     * @param taskNumber the task number to be marked as done (0-indexed)
+     * @param taskNumbers the list of task numbers to be marked as done
+     *                    (1-indexed).
      */
-    public MarkCommand(int taskNumber) {
-        this.taskNumber = taskNumber;
+    public MarkCommand(Integer[] taskNumbers) {
+        this.taskNumbers = taskNumbers;
     }
 
     /**
-     * Marks a task as done.
+     * Marks tasks as done.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        if (tasks.isValidTaskIndex(taskNumber)) {
-            tasks.markDone(taskNumber);
-            ui.printSection("I've marked this task as done:\n\t" + tasks.get(taskNumber));
+        if (super.isValidTasks(tasks, taskNumbers)) {
+            this.markAllTaskDone(tasks, ui);
         } else {
-            ui.printSection("Invalid task number: " + taskNumber);
+            ui.printSection("Invalid task number(s) provided: " + Arrays.toString(taskNumbers));
         }
+    }
+
+    private void markAllTaskDone(TaskList tasks, Ui ui) {
+        ArrayList<Task> tasksMarked = new ArrayList<>();
+        for (int taskNumber : taskNumbers) {
+            tasksMarked.add(tasks.markDone(taskNumber - 1));
+        }
+        String prompt = taskNumbers.length == 1 ? "I've marked this task as done:\n\t"
+                : "I've marked these tasks as done:\n\t";
+        ui.printSection(prompt + TaskList.stringifyTasks(tasksMarked));
     }
 }

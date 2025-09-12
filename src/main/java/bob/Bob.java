@@ -16,12 +16,12 @@ import bob.ui.Ui;
  */
 public class Bob {
     private TaskList tasks;
-    private Storage storage;
-    private Ui ui;
+    private final Storage storage;
+    private final Ui ui;
 
     /**
      * Constructs Bob.
-     *
+     * <p>
      * It constructs and initialises tasks, storage and ui.
      *
      * @param filePath the file path to load tasks from and save tasks to.

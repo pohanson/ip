@@ -19,4 +19,20 @@ public abstract class Command {
      * @param storage the storage.
      */
     public abstract void execute(TaskList tasks, Ui ui, Storage storage);
+
+    /**
+     * Checks if the provided task numbers are valid for the given TaskList.
+     *
+     * @param tasks       the TaskList to check against.
+     * @param taskNumbers the task numbers to validate (1-indexed).
+     * @return true if all task numbers are valid, false otherwise.
+     */
+    public boolean isValidTasks(TaskList tasks, Integer[] taskNumbers) {
+        for (int taskNumber : taskNumbers) {
+            if (!tasks.isValidTaskIndex(taskNumber - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
