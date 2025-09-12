@@ -24,7 +24,7 @@ public class UnmarkCommand extends Command {
     }
 
     /**
-     * Marks a task as undone.
+     * Marks tasks as undone.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
@@ -41,7 +41,7 @@ public class UnmarkCommand extends Command {
             tasksUnmarked.add(tasks.unmarkDone(taskNumber - 1));
         }
         String prompt = taskNumbers.length == 1 ? "I've marked this task as undone:\n\t"
-                                        : "I've marked these tasks as undone:\n\t";
+                : "I've marked these tasks as undone:\n\t";
         ui.printSection(prompt + TaskList.stringifyTasks(tasksUnmarked));
     }
 }

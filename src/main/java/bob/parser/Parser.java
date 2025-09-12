@@ -55,8 +55,7 @@ public class Parser {
             if (parts.length != 2) {
                 return new InvalidCommand(input, "The delete command requires a task number.");
             }
-            int taskNumber = Integer.parseInt(parts[1]) - 1;
-            return new DeleteCommand(taskNumber);
+            return new DeleteCommand(parseInts(parts[1]));
         }
         case "find": {
             if (parts.length != 2) {

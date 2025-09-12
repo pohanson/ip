@@ -25,7 +25,7 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * Marks a task as done.
+     * Marks tasks as done.
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
