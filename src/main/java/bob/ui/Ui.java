@@ -39,7 +39,7 @@ public class Ui {
         String helpMessage = """
                 Available commands:
                     list - List all tasks
-                    mark <task number> - Mark a task as done
+                    mark <task number> - Mark a task as done. Separate tasks by a space
                     unmark <task number> - Unmark a task as not done
                     todo <description> - Add a task without any date/time attached to it
                     deadline <description> /by <datetime> - Add a task that need to be done before a specific date/time

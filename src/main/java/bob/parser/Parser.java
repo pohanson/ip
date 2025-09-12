@@ -1,5 +1,7 @@
 package bob.parser;
 
+import java.util.Arrays;
+
 import bob.command.AddCommand;
 import bob.command.Command;
 import bob.command.DeleteCommand;
@@ -21,7 +23,7 @@ public class Parser {
      * @param input the user input provided, including the action word (eg.
      *              list, bye, mark, etc.)
      * @return the command according to the input. If the command is invalid, it
-     *         will return an InvalidCommand.
+     * will return an InvalidCommand.
      */
     public static Command parse(String input) {
         String[] parts = input.split(" ", 2);
@@ -34,8 +36,7 @@ public class Parser {
             if (parts.length != 2) {
                 return new InvalidCommand(input, "The mark command requires a task number.");
             }
-            int taskNumber = Integer.parseInt(parts[1]) - 1;
-            return new MarkCommand(taskNumber);
+            return new MarkCommand(parseInts(parts[1]));
         }
         case "unmark": {
             if (parts.length != 2) {
@@ -68,5 +69,9 @@ public class Parser {
             return new InvalidCommand(input);
         }
         }
+    }
+
+    private static Integer[] parseInts(String input) {
+        return Arrays.stream(input.split(" ")).map(num -> Integer.parseInt(num.strip())).toArray(Integer[]::new);
     }
 }
