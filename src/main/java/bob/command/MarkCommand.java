@@ -38,7 +38,6 @@ public class MarkCommand extends Command {
 
     private void markAllTaskDone(TaskList tasks, Ui ui) {
         ArrayList<Task> tasksMarked = new ArrayList<>();
-        System.out.println(taskNumbers.toString());
         for (int taskNumber : taskNumbers) {
             tasksMarked.add(tasks.markDone(taskNumber - 1));
         }

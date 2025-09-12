@@ -42,8 +42,7 @@ public class Parser {
             if (parts.length != 2) {
                 return new InvalidCommand(input, "The unmark command requires a task number.");
             }
-            int taskNumber = Integer.parseInt(parts[1]) - 1;
-            return new UnmarkCommand(taskNumber);
+            return new UnmarkCommand(parseInts(parts[1]));
         }
         case "todo":
             // Fallthrough as they uses the Task.createFromString factory method
