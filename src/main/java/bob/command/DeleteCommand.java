@@ -11,6 +11,11 @@ import bob.ui.Ui;
  * Command to delete a task.
  */
 public class DeleteCommand extends Command {
+    private static final String SINGLE_TASK_PROMPT = "I've removed this task:\n\t";
+    private static final String MULTIPLE_TASKS_PROMPT = "I've removed these tasks:\n\t";
+    private static final String INVALID_TASK_ERROR = "Invalid task number(s) provided: ";
+    private static final String TASK_COUNT_MESSAGE = "\nNow you've %d tasks in the list.";
+    
     private final Integer[] taskNumbers;
 
     /**
@@ -31,7 +36,7 @@ public class DeleteCommand extends Command {
         if (super.isValidTasks(tasks, taskNumbers)) {
             this.deleteAllTasks(tasks, ui);
         } else {
-            ui.printSection("Invalid task number(s) provided: " + Arrays.toString(taskNumbers));
+            ui.showError(INVALID_TASK_ERROR + Arrays.toString(taskNumbers));
         }
     }
 
@@ -40,8 +45,8 @@ public class DeleteCommand extends Command {
         for (int taskNumber : taskNumbers) {
             tasksDeleted.add(tasks.remove(taskNumber - 1));
         }
-        String prompt = taskNumbers.length == 1 ? "I've removed this task:\n\t" : "I've removed these tasks:\n\t";
+        String prompt = taskNumbers.length == 1 ? SINGLE_TASK_PROMPT : MULTIPLE_TASKS_PROMPT;
         ui.printSection(prompt + TaskList.stringifyTasks(tasksDeleted)
-                + String.format("\nNow you've %d tasks in the list.", tasks.size()));
+                + String.format(TASK_COUNT_MESSAGE, tasks.size()));
     }
 }

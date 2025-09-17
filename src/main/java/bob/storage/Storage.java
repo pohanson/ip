@@ -26,6 +26,7 @@ public class Storage {
      * It will also create relevant directories, if it does not exists.
      *
      * @param filePath the file path of the storage.
+     * @throws RuntimeException if unable to create the storage file or directories
      */
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -37,7 +38,7 @@ public class Storage {
                 Files.createDirectories(path.getParent());
                 Files.createFile(path);
             } catch (IOException e) {
-                System.out.println("Error creating file: " + e.getMessage());
+                throw new RuntimeException("Failed to create storage file: " + filePath, e);
             }
         }
 
@@ -59,11 +60,8 @@ public class Storage {
      */
     public void saveTaskList(TaskList tasks) throws IOException {
         File file = this.getFile();
-        FileWriter fw = new FileWriter(file);
-        try {
+        try (FileWriter fw = new FileWriter(file)) {
             fw.write(tasks.toStorageString());
-        } finally {
-            fw.close();
         }
     }
 
@@ -75,27 +73,26 @@ public class Storage {
      */
     public TaskList loadTaskList() throws IOException, InvalidInputException {
         File file = this.getFile();
-        Scanner s = new Scanner(file);
-        try {
+        try (Scanner s = new Scanner(file)) {
             TaskList tasks = new TaskList(this);
             while (s.hasNextLine()) {
-                String[] line = s.nextLine().split(" ", 2);
-
-                if (line.length != 2) {
-                    System.out.println("Invalid task format in storage: " + line);
+                String line = s.nextLine();
+                if (line.trim().isEmpty()) {
                     continue;
                 }
+                
+                String[] parts = line.split(" ", 2);
+                if (parts.length != 2) {
+                    throw new InvalidInputException("Invalid task format in storage: " + line);
+                }
 
-                Task task = Task.createFromString(line[1]);
-                if (line[0].equals("1")) {
+                Task task = Task.createFromString(parts[1]);
+                if (parts[0].equals("1")) {
                     task.markDone();
                 }
                 tasks.add(task);
             }
             return tasks;
-
-        } finally {
-            s.close();
         }
     }
 }

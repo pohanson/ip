@@ -13,7 +13,7 @@ public abstract class Task {
     private static final String DATETIME_OUTPUT_FORMAT = "dd MMM yyyy HH:mm";
 
     protected String description;
-    protected boolean isDone;
+    private boolean isDone;
 
     /**
      * Constructs a Task.
@@ -94,6 +94,15 @@ public abstract class Task {
      */
     public String getStatusIcon() {
         return (isDone ? "X" : " ");
+    }
+
+    /**
+     * Returns whether the task is done.
+     *
+     * @return true if the task is done, false otherwise
+     */
+    public boolean isDone() {
+        return isDone;
     }
 
     /**

@@ -36,13 +36,21 @@ public class Parser {
             if (parts.length != 2) {
                 return new InvalidCommand(input, "The mark command requires a task number.");
             }
-            return new MarkCommand(parseInts(parts[1]));
+            try {
+                return new MarkCommand(parseInts(parts[1]));
+            } catch (NumberFormatException e) {
+                return new InvalidCommand(input, "Invalid task number format: " + parts[1]);
+            }
         }
         case "unmark": {
             if (parts.length != 2) {
                 return new InvalidCommand(input, "The unmark command requires a task number.");
             }
-            return new UnmarkCommand(parseInts(parts[1]));
+            try {
+                return new UnmarkCommand(parseInts(parts[1]));
+            } catch (NumberFormatException e) {
+                return new InvalidCommand(input, "Invalid task number format: " + parts[1]);
+            }
         }
         case "todo":
             // Fallthrough as they uses the Task.createFromString factory method
@@ -55,7 +63,11 @@ public class Parser {
             if (parts.length != 2) {
                 return new InvalidCommand(input, "The delete command requires a task number.");
             }
-            return new DeleteCommand(parseInts(parts[1]));
+            try {
+                return new DeleteCommand(parseInts(parts[1]));
+            } catch (NumberFormatException e) {
+                return new InvalidCommand(input, "Invalid task number format: " + parts[1]);
+            }
         }
         case "find": {
             if (parts.length != 2) {
@@ -70,6 +82,14 @@ public class Parser {
     }
 
     private static Integer[] parseInts(String input) {
-        return Arrays.stream(input.split(" ")).map(num -> Integer.parseInt(num.strip())).toArray(Integer[]::new);
+        try {
+            return Arrays.stream(input.split(" "))
+                    .map(String::strip)
+                    .filter(s -> !s.isEmpty())
+                    .map(Integer::parseInt)
+                    .toArray(Integer[]::new);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Invalid task number format: " + input);
+        }
     }
 }

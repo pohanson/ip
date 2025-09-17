@@ -12,6 +12,10 @@ import bob.ui.Ui;
  * Command to mark a task as done.
  */
 public class MarkCommand extends Command {
+    private static final String SINGLE_TASK_PROMPT = "I've marked this task as done:\n\t";
+    private static final String MULTIPLE_TASKS_PROMPT = "I've marked these tasks as done:\n\t";
+    private static final String INVALID_TASK_ERROR = "Invalid task number(s) provided: ";
+    
     private final Integer[] taskNumbers;
 
     /**
@@ -32,7 +36,7 @@ public class MarkCommand extends Command {
         if (super.isValidTasks(tasks, taskNumbers)) {
             this.markAllTaskDone(tasks, ui);
         } else {
-            ui.printSection("Invalid task number(s) provided: " + Arrays.toString(taskNumbers));
+            ui.showError(INVALID_TASK_ERROR + Arrays.toString(taskNumbers));
         }
     }
 
@@ -41,8 +45,7 @@ public class MarkCommand extends Command {
         for (int taskNumber : taskNumbers) {
             tasksMarked.add(tasks.markDone(taskNumber - 1));
         }
-        String prompt = taskNumbers.length == 1 ? "I've marked this task as done:\n\t"
-                : "I've marked these tasks as done:\n\t";
+        String prompt = taskNumbers.length == 1 ? SINGLE_TASK_PROMPT : MULTIPLE_TASKS_PROMPT;
         ui.printSection(prompt + TaskList.stringifyTasks(tasksMarked));
     }
 }

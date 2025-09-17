@@ -149,7 +149,7 @@ public class TaskList {
         if (tasks.isEmpty()) {
             return "";
         } else {
-            return tasks.stream().map(task -> (task.isDone ? "1" : "0") + " " + task.toInputString()).reduce("",
+            return tasks.stream().map(task -> (task.isDone() ? "1" : "0") + " " + task.toInputString()).reduce("",
                     (acc, x) -> acc + x + "\n");
         }
     }
@@ -158,6 +158,9 @@ public class TaskList {
      * Saves the current task list to storage.
      */
     public void saveToStorage() {
+        if (storage == null) {
+            return; // Skip saving if no storage is available
+        }
         try {
             storage.saveTaskList(this);
         } catch (IOException e) {

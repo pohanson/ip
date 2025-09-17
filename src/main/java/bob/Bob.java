@@ -16,7 +16,7 @@ import bob.ui.Ui;
  */
 public class Bob {
     private TaskList tasks;
-    private final Storage storage;
+    private Storage storage;
     private final Ui ui;
 
     /**
@@ -27,10 +27,15 @@ public class Bob {
      * @param filePath the file path to load tasks from and save tasks to.
      */
     public Bob(String filePath) {
-        this.storage = new Storage(filePath);
         this.ui = new Ui();
         try {
+            this.storage = new Storage(filePath);
             tasks = this.storage.loadTaskList();
+        } catch (RuntimeException e) {
+            ui.showError("Error initializing storage: " + e.getMessage());
+            // Create a dummy storage that won't persist
+            this.storage = null;
+            tasks = new TaskList(null);
         } catch (IOException e) {
             ui.showError("Error loading tasks from file, using empty task list: " + e.getMessage());
             tasks = new TaskList(this.storage);
@@ -38,7 +43,6 @@ public class Bob {
             ui.showError("Error loading tasks from file, using empty task list: " + e.getMessage());
             tasks = new TaskList(this.storage);
         }
-
     }
 
     /**

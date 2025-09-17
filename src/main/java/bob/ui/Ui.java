@@ -4,27 +4,36 @@ package bob.ui;
  * User Interface for the application.
  */
 public class Ui {
+    private static final String LINE_SEPARATOR = "=".repeat(80);
+    private static final String ERROR_PREFIX = "Error: ";
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_RESET = "\u001B[0m";
+    
     private final StringBuilder responseBuffer = new StringBuilder();
 
     /**
      * Prints a line separator.
      */
     public void printLine() {
-        System.out.println("=".repeat(80));
+        System.out.println(LINE_SEPARATOR);
     }
 
     /**
      * Shows an error message.
+     *
+     * @param message the error message to display.
      */
     public void showError(String message) {
-        responseBuffer.append("Error: " + message + "\n");
-        System.out.println("\u001B[31mError: " + message + "\u001B[0m");
+        responseBuffer.append(ERROR_PREFIX).append(message).append("\n");
+        System.out.println(ANSI_RED + ERROR_PREFIX + message + ANSI_RESET);
     }
 
     /**
      * Prints a section header.
      * <p>
      * It is just the string s, with a line below.
+     *
+     * @param s the section content to print.
      */
     public void printSection(String s) {
         responseBuffer.append(s);
@@ -55,6 +64,11 @@ public class Ui {
         System.out.println(helpMessage);
     }
 
+    /**
+     * Gets the accumulated response and clears the buffer.
+     *
+     * @return the accumulated response from operations
+     */
     public String getResponse() {
         String res = responseBuffer.toString();
         responseBuffer.setLength(0); // Clear the buffer

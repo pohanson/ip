@@ -9,10 +9,14 @@ import bob.exception.InvalidInputException;
  * Tasks that need to be done before a specific date/time.
  */
 public class Deadline extends Task {
+    private static final String TASK_TYPE_SYMBOL = "[D]";
+    private static final String COMMAND_KEYWORD = "deadline";
+    private static final String TIME_SEPARATOR = "/by";
+    
     private final LocalDateTime deadline;
 
     /**
-     * Constructs Deadlines.
+     * Constructs a Deadline task.
      *
      * @param description description for the task.
      * @param deadline    deadline for the task.
@@ -23,13 +27,14 @@ public class Deadline extends Task {
     }
 
     /**
-     * Parses the input string given into Deadlines object.
+     * Parses the input string given into Deadline object.
      *
-     * @param input should be of the format: deadline [description] /by
-     *              [datetime].
+     * @param input should be of the format: deadline [description] /by [datetime].
+     * @return a new Deadline task
+     * @throws InvalidInputException if the input format is invalid or description is empty
      */
     public static Deadline parse(String input) throws InvalidInputException {
-        String[] params = input.replaceFirst("deadline", "").split("/by");
+        String[] params = input.replaceFirst(COMMAND_KEYWORD, "").split(TIME_SEPARATOR);
         if (params.length != 2 || params[0].trim().isEmpty() || params[1].trim().isEmpty()) {
             throw new InvalidInputException("Invalid deadline input: " + input
                     + "\nExample of valid format: deadline return book /by 01/01/2025 1200");
@@ -41,16 +46,15 @@ public class Deadline extends Task {
             throw new InvalidInputException("Invalid date format in deadline input: " + params[1].trim()
                     + "\nExample of valid format: deadline return book /by 01/01/2025 1200");
         }
-
     }
 
     @Override
     public String toString() {
-        return String.format("[D]%s (due: %s)", super.toString(), Task.formatDateTime(deadline));
+        return String.format("%s%s (due: %s)", TASK_TYPE_SYMBOL, super.toString(), Task.formatDateTime(deadline));
     }
 
     @Override
     public String toInputString() {
-        return "deadline " + this.description + " /by " + Task.toInputStringDateTime(this.deadline);
+        return COMMAND_KEYWORD + " " + this.description + " " + TIME_SEPARATOR + " " + Task.toInputStringDateTime(this.deadline);
     }
 }

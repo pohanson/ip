@@ -8,6 +8,8 @@ import bob.ui.Ui;
  * Command to handle invalid user input.
  */
 public class InvalidCommand extends Command {
+    private static final String ERROR_MESSAGE_FORMAT = "Invalid command: %s\n%s";
+    
     private final String header;
     private final String details;
 
@@ -34,10 +36,14 @@ public class InvalidCommand extends Command {
 
     /**
      * Prints the error message for invalid command.
+     *
+     * @param tasks   the TaskList (unused in this command)
+     * @param ui      the user interface for output
+     * @param storage the storage (unused in this command)
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.showError(String.format("Invalid command: %s\n%s", header, details));
+        ui.showError(String.format(ERROR_MESSAGE_FORMAT, header, details));
         ui.printHelp();
     }
 }

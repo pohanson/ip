@@ -10,6 +10,8 @@ import bob.ui.Ui;
  * Command to add a task.
  */
 public class AddCommand extends Command {
+    private static final String SUCCESS_MESSAGE_FORMAT = "I've added this task:\n\t %s\nNow you've %d tasks in the list.";
+    
     private final String input;
 
     /**
@@ -29,10 +31,9 @@ public class AddCommand extends Command {
         try {
             Task task = Task.createFromString(input);
             tasks.add(task);
-            ui.printSection(String.format("I've added this task:\n\t %s\nNow you've %d tasks in the list.", task,
-                    tasks.size()));
+            ui.printSection(String.format(SUCCESS_MESSAGE_FORMAT, task, tasks.size()));
         } catch (InvalidInputException e) {
-            ui.printSection(e.getMessage());
+            ui.showError(e.getMessage());
         }
     }
 
