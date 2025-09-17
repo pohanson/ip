@@ -166,3 +166,97 @@ Applied consistent constant extraction across all command classes to eliminate m
 - **Code Quality**: Eliminates magic strings and improves code readability
 - **Documentation**: Complete parameter documentation for better code understanding
 - **Error Handling**: Proper distinction between errors and informational messages
+
+## Comprehensive Test Coverage Enhancement - September 17, 2025
+
+**User Request:** "Can you help to add more tests for the app? The junit test case naming should have the following format: `unitBeingTested_descriptionOfTestInputs_expectedOutcome`. Please include the prompt and short summary of the changes in the `AI.md`"
+
+### Summary of Test Improvements Made
+
+#### 1. Enhanced Existing Test Files with Comprehensive Coverage
+- **ParserTest.java**: Expanded from 9 basic tests to 25+ comprehensive tests covering:
+  - Edge cases for all command types (todo, deadline, event, mark, unmark, delete, find, list, bye)
+  - Invalid input handling (missing parameters, invalid numbers, empty strings)
+  - Case sensitivity testing (uppercase, mixed case, lowercase commands)
+  - Multiple number parsing for mark/unmark/delete operations
+  - Whitespace-only input validation
+
+- **TaskTest.java**: Expanded from 7 basic tests to 30+ comprehensive tests covering:
+  - All task types (Todo, Deadline, Event) creation and validation
+  - Marking/unmarking functionality with edge cases
+  - Description search functionality with partial matches and edge cases
+  - DateTime parsing and formatting for all formats
+  - Input string conversion for storage operations
+  - Invalid input handling for all task creation scenarios
+
+#### 2. Created New Comprehensive Test Files
+- **TaskListTest.java**: Created with 25+ tests covering:
+  - Basic functionality (add, remove, get, size, isEmpty)
+  - Task manipulation (markDone, unmarkDone with validation)
+  - Index validation and boundary testing
+  - String representation and formatting
+  - Filtering operations with keyword matching
+  - Storage string conversion for persistence
+  - Static utility method testing
+
+- **StorageTest.java**: Created with 20+ tests covering:
+  - File creation and directory handling
+  - Save and load operations with round-trip testing
+  - Error handling for invalid file formats and permissions
+  - Edge cases (empty files, trailing newlines, whitespace)
+  - Task state preservation through save/load cycles
+  - Invalid input format handling and recovery
+
+- **UiTest.java**: Created with 25+ tests covering:
+  - Message display functionality with line separators
+  - Error message formatting with ANSI color codes
+  - Section printing with proper formatting
+  - Help message display with all command information
+  - Response buffer functionality and state management
+  - Integration testing for mixed operations
+  - Edge cases for null input handling
+
+#### 3. Test Naming Convention Implementation
+All tests now follow the specified format: `unitBeingTested_descriptionOfTestInputs_expectedOutcome`
+
+**Examples:**
+- `parse_todoCommandWithDescription_returnsAddCommand()`
+- `createFromString_deadlineWithInvalidDateFormat_throwsInvalidInputException()`
+- `markDone_validIndex_marksTaskAsDone()`
+- `loadTaskList_fileWithMultipleTasks_createsAllTasks()`
+- `showError_simpleErrorMessage_displaysWithErrorPrefix()`
+
+#### 4. Comprehensive Coverage Areas
+- **Positive Testing**: Valid inputs and expected successful outcomes
+- **Negative Testing**: Invalid inputs and proper error handling
+- **Edge Cases**: Boundary conditions, empty inputs, null values
+- **Integration Testing**: Multi-step operations and state persistence
+- **Error Recovery**: Graceful handling of malformed data and file issues
+
+### Technical Details
+
+**Test Files Created/Enhanced:**
+- `src/test/java/bob/parser/ParserTest.java` - Enhanced with 25+ tests (15 additional)
+- `src/test/java/bob/task/TaskTest.java` - Enhanced with 30+ tests (23 additional)  
+- `src/test/java/bob/task/TaskListTest.java` - Created with 25+ comprehensive tests
+- `src/test/java/bob/storage/StorageTest.java` - Created with 20+ comprehensive tests
+- `src/test/java/bob/ui/UiTest.java` - Created with 25+ comprehensive tests
+
+**Test Coverage Statistics:**
+- **Total Tests**: 100+ comprehensive test cases (previously ~16)
+- **Test Files**: 5 comprehensive test files covering all major components
+- **Coverage Areas**: Parser, Task hierarchy, TaskList operations, Storage persistence, UI display
+- **Naming Convention**: 100% compliance with `unitBeingTested_descriptionOfTestInputs_expectedOutcome` format
+
+**Key Testing Improvements:**
+- **Robustness**: Comprehensive edge case testing ensures application stability
+- **Maintainability**: Clear test names make test purpose immediately apparent
+- **Documentation**: Tests serve as living documentation of expected behavior
+- **Regression Prevention**: Extensive coverage prevents future code changes from breaking existing functionality
+- **Quality Assurance**: Multiple test scenarios validate both happy path and error conditions
+
+**Benefits:**
+- **Reliability**: Comprehensive testing ensures robust application behavior
+- **Maintainability**: Well-named tests make debugging and maintenance easier
+- **Documentation**: Tests provide clear examples of expected component behavior
+- **Confidence**: Extensive coverage provides confidence in code changes and refactoring
