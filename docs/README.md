@@ -25,6 +25,6 @@ Bob allows you to perform this actions via **text commands**:
 ## How to get it
 
 1. Ensure you have java installed.
-1. Download the jar [here](https://github.com/pohanson/ip/releases/download/A-Jar/Bob.jar)
+1. Download the jar [here](https://github.com/pohanson/ip/releases/download/A-Release/Bob.jar)
 1. `java -jar <filename>` to run the file.
 1. Just use it.
