@@ -40,6 +40,7 @@ public class Main extends Application {
             assert !fxmlLoader.getLocation().getFile().equals("") : "FXML file not loaded";
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            stage.setTitle("Bob");
             stage.setMinHeight(500);
             stage.setMinWidth(700);
             stage.setScene(scene);
